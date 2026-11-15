@@ -34,6 +34,15 @@
         2002,
         2003,
         2005
+      ],
+      "acquisitions": [
+        {
+          "season": 1983,
+          "method": "Draft",
+          "year": 1983,
+          "round": 1,
+          "overall": 4
+        }
       ]
     },
     {
@@ -56,6 +65,20 @@
       "playoffSeasonsInWindow": [
         1996,
         1997
+      ],
+      "acquisitions": [
+        {
+          "season": 1984,
+          "method": "Draft",
+          "year": 1983,
+          "round": 5,
+          "overall": 88
+        },
+        {
+          "season": 1996,
+          "method": "Free agent",
+          "date": "1996-12-27"
+        }
       ]
     },
     {
@@ -79,6 +102,15 @@
         2000,
         2001,
         2002
+      ],
+      "acquisitions": [
+        {
+          "season": 1990,
+          "method": "Draft",
+          "year": 1989,
+          "round": 4,
+          "overall": 74
+        }
       ]
     },
     {
@@ -100,6 +132,15 @@
         1998,
         1999,
         2000
+      ],
+      "acquisitions": [
+        {
+          "season": 1991,
+          "method": "Draft",
+          "year": 1990,
+          "round": 3,
+          "overall": 45
+        }
       ]
     },
     {
@@ -121,6 +162,15 @@
         1998,
         1999,
         2000
+      ],
+      "acquisitions": [
+        {
+          "season": 1991,
+          "method": "Draft",
+          "year": 1991,
+          "round": 1,
+          "overall": 10
+        }
       ]
     },
     {
@@ -142,6 +192,20 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 1992,
+          "method": "Draft",
+          "year": 1989,
+          "round": 6,
+          "overall": 116
+        },
+        {
+          "season": 2007,
+          "method": "Free agent",
+          "date": "2007-07-09"
+        }
       ]
     },
     {
@@ -159,6 +223,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1996
+      ],
+      "acquisitions": [
+        {
+          "season": 1993,
+          "method": "Free agent",
+          "date": "1993-07-28"
+        }
       ]
     },
     {
@@ -188,6 +259,20 @@
         2002,
         2003,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 1993,
+          "method": "Draft",
+          "year": 1992,
+          "round": 2,
+          "overall": 46
+        },
+        {
+          "season": 2007,
+          "method": "Free agent",
+          "date": "2008-02-25"
+        }
       ]
     },
     {
@@ -215,6 +300,14 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 1993,
+          "method": "Trade",
+          "date": "1993-06-30",
+          "from": "Winnipeg Jets"
+        }
       ]
     },
     {
@@ -236,6 +329,20 @@
         1998,
         1999,
         2000
+      ],
+      "acquisitions": [
+        {
+          "season": 1994,
+          "method": "Waivers",
+          "date": "1995-01-18",
+          "from": "Pittsburgh Penguins"
+        },
+        {
+          "season": 1998,
+          "method": "Trade",
+          "date": "1998-07-14",
+          "from": "Nashville Predators"
+        }
       ]
     },
     {
@@ -259,6 +366,20 @@
         2000,
         2001,
         2002
+      ],
+      "acquisitions": [
+        {
+          "season": 1995,
+          "method": "Trade",
+          "date": "1995-10-24",
+          "from": "San Jose Sharks"
+        },
+        {
+          "season": 2000,
+          "method": "Trade",
+          "date": "2000-12-28",
+          "from": "Florida Panthers"
+        }
       ]
     },
     {
@@ -286,6 +407,14 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 1995,
+          "method": "Trade",
+          "date": "1996-03-20",
+          "from": "Edmonton Oilers"
+        }
       ]
     },
     {
@@ -303,6 +432,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1996
+      ],
+      "acquisitions": [
+        {
+          "season": 1996,
+          "method": "Trade",
+          "date": "1997-01-27",
+          "from": "Pittsburgh Penguins"
+        }
       ]
     },
     {
@@ -320,6 +457,15 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1997
+      ],
+      "acquisitions": [
+        {
+          "season": 1996,
+          "method": "Draft",
+          "year": 1991,
+          "round": 4,
+          "overall": 76
+        }
       ]
     },
     {
@@ -345,6 +491,14 @@
         2002,
         2003,
         2005
+      ],
+      "acquisitions": [
+        {
+          "season": 1996,
+          "method": "Trade",
+          "date": "1996-10-09",
+          "from": "Hartford Whalers"
+        }
       ]
     },
     {
@@ -372,6 +526,15 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 1996,
+          "method": "Draft",
+          "year": 1994,
+          "round": 10,
+          "overall": 257
+        }
       ]
     },
     {
@@ -392,6 +555,13 @@
         1998,
         1999,
         2000
+      ],
+      "acquisitions": [
+        {
+          "season": 1997,
+          "method": "Free agent",
+          "date": "1997-08-01"
+        }
       ]
     },
     {
@@ -409,6 +579,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1998
+      ],
+      "acquisitions": [
+        {
+          "season": 1998,
+          "method": "Trade",
+          "date": "1999-03-23",
+          "from": "Tampa Bay Lightning"
+        }
       ]
     },
     {
@@ -430,6 +608,18 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1999
+      ],
+      "acquisitions": [
+        {
+          "season": 1998,
+          "method": "Free agent",
+          "date": "1997-06-09"
+        },
+        {
+          "season": 2002,
+          "method": "Free agent",
+          "date": "2002-08-27"
+        }
       ]
     },
     {
@@ -448,6 +638,13 @@
       "playoffSeasonsInWindow": [
         1999,
         2000
+      ],
+      "acquisitions": [
+        {
+          "season": 1999,
+          "method": "Free agent",
+          "date": "1999-11-11"
+        }
       ]
     },
     {
@@ -467,6 +664,13 @@
         2000,
         2001,
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 2000,
+          "method": "Free agent",
+          "date": "2000-08-23"
+        }
       ]
     },
     {
@@ -491,6 +695,18 @@
         2001,
         2003,
         2005
+      ],
+      "acquisitions": [
+        {
+          "season": 2000,
+          "method": "Free agent",
+          "date": "2000-09-18"
+        },
+        {
+          "season": 2009,
+          "method": "Free agent",
+          "date": "2009-08-04"
+        }
       ]
     },
     {
@@ -509,6 +725,13 @@
       "playoffSeasonsInWindow": [
         2001,
         2002
+      ],
+      "acquisitions": [
+        {
+          "season": 2001,
+          "method": "Free agent",
+          "date": "2001-07-05"
+        }
       ]
     },
     {
@@ -528,6 +751,13 @@
         2001,
         2002,
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 2001,
+          "method": "Free agent",
+          "date": "2001-08-22"
+        }
       ]
     },
     {
@@ -550,6 +780,15 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2001,
+          "method": "Draft",
+          "year": 1998,
+          "round": 6,
+          "overall": 171
+        }
       ]
     },
     {
@@ -571,6 +810,15 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2002,
+          "method": "Draft",
+          "year": 1999,
+          "round": 7,
+          "overall": 210
+        }
       ]
     },
     {
@@ -588,6 +836,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 2003,
+          "method": "Free agent",
+          "date": "2003-11-05"
+        }
       ]
     },
     {
@@ -605,6 +860,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 2003,
+          "method": "Free agent",
+          "date": "2003-07-30"
+        }
       ]
     },
     {
@@ -622,6 +884,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2005
+      ],
+      "acquisitions": [
+        {
+          "season": 2003,
+          "method": "Free agent",
+          "date": "2002-08-05"
+        }
       ]
     },
     {
@@ -641,6 +910,14 @@
         2003,
         2005,
         2006
+      ],
+      "acquisitions": [
+        {
+          "season": 2003,
+          "method": "Trade",
+          "date": "2004-02-27",
+          "from": "Washington Capitals"
+        }
       ]
     },
     {
@@ -663,6 +940,20 @@
       "playoffSeasonsInWindow": [
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2003,
+          "method": "Draft",
+          "year": 2002,
+          "round": 2,
+          "overall": 58
+        },
+        {
+          "season": 2010,
+          "method": "Free agent",
+          "date": "2010-05-24"
+        }
       ]
     },
     {
@@ -680,6 +971,15 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2006
+      ],
+      "acquisitions": [
+        {
+          "season": 2005,
+          "method": "Draft",
+          "year": 2000,
+          "round": 2,
+          "overall": 38
+        }
       ]
     },
     {
@@ -703,6 +1003,18 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2005,
+          "method": "Free agent",
+          "date": "2005-09-17"
+        },
+        {
+          "season": 2012,
+          "method": "Free agent",
+          "date": "2012-07-01"
+        }
       ]
     },
     {
@@ -722,6 +1034,13 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2005,
+          "method": "Free agent",
+          "date": "2005-10-04"
+        }
       ]
     },
     {
@@ -741,6 +1060,15 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2005,
+          "method": "Draft",
+          "year": 2004,
+          "round": 3,
+          "overall": 97
+        }
       ]
     },
     {
@@ -763,6 +1091,20 @@
       "playoffSeasonsInWindow": [
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2005,
+          "method": "Draft",
+          "year": 2002,
+          "round": 3,
+          "overall": 95
+        },
+        {
+          "season": 2019,
+          "method": "Free agent",
+          "date": "2019-07-01"
+        }
       ]
     },
     {
@@ -780,6 +1122,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2006
+      ],
+      "acquisitions": [
+        {
+          "season": 2006,
+          "method": "Trade",
+          "date": "2007-02-26",
+          "from": "Chicago Blackhawks"
+        }
       ]
     },
     {
@@ -801,6 +1151,19 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2006
+      ],
+      "acquisitions": [
+        {
+          "season": 2006,
+          "method": "Trade",
+          "date": "2007-02-27",
+          "from": "Florida Panthers"
+        },
+        {
+          "season": 2009,
+          "method": "Free agent",
+          "date": "2009-08-18"
+        }
       ]
     },
     {
@@ -818,6 +1181,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2007,
+          "method": "Free agent",
+          "date": "2007-07-16"
+        }
       ]
     },
     {
@@ -835,6 +1205,15 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2007,
+          "method": "Draft",
+          "year": 2005,
+          "round": 5,
+          "overall": 132
+        }
       ]
     },
     {
@@ -852,6 +1231,15 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1996
+      ],
+      "acquisitions": [
+        {
+          "season": 1991,
+          "method": "Draft",
+          "year": 1989,
+          "round": 11,
+          "overall": 221
+        }
       ]
     },
     {
@@ -879,6 +1267,15 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 1991,
+          "method": "Draft",
+          "year": 1989,
+          "round": 3,
+          "overall": 53
+        }
       ]
     },
     {
@@ -902,6 +1299,14 @@
         1996,
         1998,
         1999
+      ],
+      "acquisitions": [
+        {
+          "season": 1993,
+          "method": "Trade",
+          "date": "1993-06-11",
+          "from": "Winnipeg Jets"
+        }
       ]
     },
     {
@@ -920,6 +1325,14 @@
       "playoffSeasonsInWindow": [
         1996,
         1997
+      ],
+      "acquisitions": [
+        {
+          "season": 1994,
+          "method": "Trade",
+          "date": "1995-04-03",
+          "from": "New Jersey Devils"
+        }
       ]
     },
     {
@@ -938,6 +1351,13 @@
       "playoffSeasonsInWindow": [
         1996,
         1997
+      ],
+      "acquisitions": [
+        {
+          "season": 1994,
+          "method": "Free agent",
+          "date": "1994-08-05"
+        }
       ]
     },
     {
@@ -955,6 +1375,15 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1996
+      ],
+      "acquisitions": [
+        {
+          "season": 1995,
+          "method": "Draft",
+          "year": 1991,
+          "round": 2,
+          "overall": 32
+        }
       ]
     },
     {
@@ -972,6 +1401,15 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1997
+      ],
+      "acquisitions": [
+        {
+          "season": 1995,
+          "method": "Draft",
+          "year": 1993,
+          "round": 1,
+          "overall": 22
+        }
       ]
     },
     {
@@ -995,6 +1433,15 @@
         2001,
         2002,
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 1995,
+          "method": "Draft",
+          "year": 1994,
+          "round": 2,
+          "overall": 49
+        }
       ]
     },
     {
@@ -1016,6 +1463,14 @@
         1998,
         1999,
         2000
+      ],
+      "acquisitions": [
+        {
+          "season": 1996,
+          "method": "Trade",
+          "date": "1997-03-18",
+          "from": "Toronto Maple Leafs"
+        }
       ]
     },
     {
@@ -1033,6 +1488,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1997
+      ],
+      "acquisitions": [
+        {
+          "season": 1997,
+          "method": "Trade",
+          "date": "1998-03-24",
+          "from": "Mighty Ducks of Anaheim"
+        }
       ]
     },
     {
@@ -1051,6 +1514,14 @@
       "playoffSeasonsInWindow": [
         1997,
         1998
+      ],
+      "acquisitions": [
+        {
+          "season": 1997,
+          "method": "Trade",
+          "date": "1998-03-24",
+          "from": "Toronto Maple Leafs"
+        }
       ]
     },
     {
@@ -1068,6 +1539,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1998
+      ],
+      "acquisitions": [
+        {
+          "season": 1998,
+          "method": "Trade",
+          "date": "1999-03-23",
+          "from": "New York Rangers"
+        }
       ]
     },
     {
@@ -1087,6 +1566,20 @@
         1998,
         1999,
         2000
+      ],
+      "acquisitions": [
+        {
+          "season": 1998,
+          "method": "Waivers",
+          "date": "1998-12-30",
+          "from": "St. Louis Blues"
+        },
+        {
+          "season": 1999,
+          "method": "Trade",
+          "date": "2000-03-13",
+          "from": "Phoenix Coyotes"
+        }
       ]
     },
     {
@@ -1113,6 +1606,13 @@
       ],
       "playoffSeasonsInWindow": [
         2001
+      ],
+      "acquisitions": [
+        {
+          "season": 1998,
+          "method": "Free agent",
+          "date": "1998-07-07"
+        }
       ]
     },
     {
@@ -1138,6 +1638,14 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 1998,
+          "method": "Trade",
+          "date": "1999-03-23",
+          "from": "Chicago Blackhawks"
+        }
       ]
     },
     {
@@ -1157,6 +1665,13 @@
         1999,
         2000,
         2001
+      ],
+      "acquisitions": [
+        {
+          "season": 1999,
+          "method": "Free agent",
+          "date": "1999-09-03"
+        }
       ]
     },
     {
@@ -1176,6 +1691,15 @@
         2000,
         2001,
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 1999,
+          "method": "Draft",
+          "year": 1998,
+          "round": 1,
+          "overall": 25
+        }
       ]
     },
     {
@@ -1193,6 +1717,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2001
+      ],
+      "acquisitions": [
+        {
+          "season": 2001,
+          "method": "Free agent",
+          "date": "2001-05-24"
+        }
       ]
     },
     {
@@ -1210,6 +1741,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2001
+      ],
+      "acquisitions": [
+        {
+          "season": 2001,
+          "method": "Trade",
+          "date": "2002-03-19",
+          "from": "Atlanta Thrashers"
+        }
       ]
     },
     {
@@ -1227,6 +1766,15 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2002
+      ],
+      "acquisitions": [
+        {
+          "season": 2002,
+          "method": "Draft",
+          "year": 2001,
+          "round": 8,
+          "overall": 258
+        }
       ]
     },
     {
@@ -1245,6 +1793,14 @@
       "playoffSeasonsInWindow": [
         2002,
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 2002,
+          "method": "Trade",
+          "date": "2002-11-16",
+          "from": "Buffalo Sabres"
+        }
       ]
     },
     {
@@ -1265,6 +1821,14 @@
         2003,
         2005,
         2006
+      ],
+      "acquisitions": [
+        {
+          "season": 2002,
+          "method": "Trade",
+          "date": "2003-03-11",
+          "from": "Los Angeles Kings"
+        }
       ]
     },
     {
@@ -1282,6 +1846,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 2003,
+          "method": "Free agent",
+          "date": "2003-07-03"
+        }
       ]
     },
     {
@@ -1299,6 +1870,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 2003,
+          "method": "Free agent",
+          "date": "2003-07-29"
+        }
       ]
     },
     {
@@ -1317,6 +1895,15 @@
       "playoffSeasonsInWindow": [
         2005,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2003,
+          "method": "Draft",
+          "year": 2000,
+          "round": 1,
+          "overall": 29
+        }
       ]
     },
     {
@@ -1336,6 +1923,13 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2005,
+          "method": "Free agent",
+          "date": "2004-04-03"
+        }
       ]
     },
     {
@@ -1355,6 +1949,13 @@
         2005,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2005,
+          "method": "Free agent",
+          "date": "2005-08-24"
+        }
       ]
     },
     {
@@ -1376,6 +1977,21 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2006
+      ],
+      "acquisitions": [
+        {
+          "season": 2005,
+          "method": "Draft",
+          "year": 2003,
+          "round": 4,
+          "overall": 132
+        },
+        {
+          "season": 2011,
+          "method": "Trade",
+          "date": "2012-02-21",
+          "from": "Tampa Bay Lightning"
+        }
       ]
     },
     {
@@ -1393,6 +2009,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2006
+      ],
+      "acquisitions": [
+        {
+          "season": 2006,
+          "method": "Free agent",
+          "date": "2006-07-26"
+        }
       ]
     },
     {
@@ -1410,6 +2033,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2007,
+          "method": "Free agent",
+          "date": "2007-07-01"
+        }
       ]
     },
     {
@@ -1427,6 +2057,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2007,
+          "method": "Trade",
+          "date": "2008-02-26",
+          "from": "Los Angeles Kings"
+        }
       ]
     },
     {
@@ -1453,6 +2091,20 @@
         1999,
         2000,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 1993,
+          "method": "Draft",
+          "year": 1991,
+          "round": 3,
+          "overall": 54
+        },
+        {
+          "season": 2005,
+          "method": "Free agent",
+          "date": "2005-08-08"
+        }
       ]
     },
     {
@@ -1470,6 +2122,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1996
+      ],
+      "acquisitions": [
+        {
+          "season": 1994,
+          "method": "Trade",
+          "date": "1994-06-29",
+          "from": "Calgary Flames"
+        }
       ]
     },
     {
@@ -1487,6 +2147,13 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1997
+      ],
+      "acquisitions": [
+        {
+          "season": 1995,
+          "method": "Free agent",
+          "date": "1993-06-16"
+        }
       ]
     },
     {
@@ -1504,6 +2171,15 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1998
+      ],
+      "acquisitions": [
+        {
+          "season": 1997,
+          "method": "Draft",
+          "year": 1993,
+          "round": 5,
+          "overall": 126
+        }
       ]
     },
     {
@@ -1521,6 +2197,14 @@
       "inactive": [],
       "playoffSeasonsInWindow": [
         1998
+      ],
+      "acquisitions": [
+        {
+          "season": 1998,
+          "method": "Trade",
+          "date": "1999-03-23",
+          "from": "Tampa Bay Lightning"
+        }
       ]
     },
     {
@@ -1540,6 +2224,14 @@
         2001,
         2003,
         2005
+      ],
+      "acquisitions": [
+        {
+          "season": 1999,
+          "method": "Waivers",
+          "date": "1999-10-13",
+          "from": "Vancouver Canucks"
+        }
       ]
     },
     {
@@ -1572,6 +2264,19 @@
         2001,
         2006,
         2007
+      ],
+      "acquisitions": [
+        {
+          "season": 2001,
+          "method": "Trade",
+          "date": "2001-07-01",
+          "from": "Buffalo Sabres"
+        },
+        {
+          "season": 2006,
+          "method": "Free agent",
+          "date": "2006-07-31"
+        }
       ]
     },
     {
@@ -1590,6 +2295,13 @@
       "playoffSeasonsInWindow": [
         2002,
         2003
+      ],
+      "acquisitions": [
+        {
+          "season": 2002,
+          "method": "Free agent",
+          "date": "2002-07-02"
+        }
       ]
     }
   ]

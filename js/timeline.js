@@ -136,7 +136,7 @@
     // Full-row hit target
     row.append("rect").attr("x", 0).attr("width", width).attr("height", ROW_H)
       .attr("fill", "transparent")
-      .on("mousemove", (event, r) => showTooltip(event, r.player))
+      .on("mousemove", (event, r) => showTooltip(event, r.player, cupSeasons))
       .on("mouseleave", hideTooltip);
 
     // Highlight the season column under the pointer, in both the header and the body
@@ -176,7 +176,24 @@
     }
   }
 
-  function showTooltip(event, p) {
+  const ordinal = (n) => {
+    if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
+    return n + ({ 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th");
+  };
+
+  function describeAcquisition(a) {
+    const from = a.from ? ` from ${a.from}` : "";
+    const date = a.date && a.date.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$2/$3/$1"); // "1998-12-30" -> "12/30/1998"
+    switch (a.method) {
+      case "Draft": return `Drafted ${a.year}, ${ordinal(a.round)} round (${ordinal(a.overall)} OA)`;
+      case "Trade": return `Trade${from}, ${date}`;
+      case "Free agent": return `Free agent, ${date}`;
+      case "Waivers": return `Waiver claim${from}, ${date}`;
+      default: return "Unknown";
+    }
+  }
+
+  function showTooltip(event, p, cupSeasons) {
     const stints = p.stints.map((s) =>
       s.start === s.end ? seasonLabel(s.start) : `${seasonLabel(s.start)} to ${seasonLabel(s.end)}`
     ).join("<br>");
@@ -184,13 +201,19 @@
       g.start === g.end ? seasonLabel(g.start) : `${seasonLabel(g.start)} to ${seasonLabel(g.end)}`
     ).join("<br>");
     const seasonCount = d3.sum(p.stints, (s) => s.end - s.start + 1 - (s.start < LOCKOUT_SEASON && s.end > LOCKOUT_SEASON ? 1 : 0));
+    const cupWins = cupSeasons.filter((s) => p.playoffSeasonsInWindow.includes(s));
+    // Prefix each acquisition with its stint's first season only when there is more than one
+    const acquired = p.acquisitions.map((a) =>
+      (p.acquisitions.length > 1 ? `${shortSeason(a.season)}: ` : "") + describeAcquisition(a)
+    ).join("<br>");
     tooltip.innerHTML = `
       <div class="tt-name">${p.name}</div>
       <div class="tt-row">${POSITION_NAMES[p.position]} · ${p.role}</div>
       <div class="tt-row"><span class="tt-key">Red Wings:</span><br>${stints}</div>
+      <div class="tt-row"><span class="tt-key">Acquired:</span><br>${acquired}</div>
       ${inactive ? `<div class="tt-row"><span class="tt-key">No games played:</span><br>${inactive}</div>` : ""}
       <div class="tt-row"><span class="tt-key">Seasons with Detroit:</span> ${seasonCount}</div>
-      <div class="tt-row"><span class="tt-key">Playoffs, 1996-97 to 2007-08:</span> ${p.playoffSeasonsInWindow.map(shortSeason).join(", ")}</div>`;
+      <div class="tt-row"><span class="tt-key">Cup wins:</span> ${cupWins.length ? cupWins.map(shortSeason).join(", ") : "None"}</div>`;
     tooltip.hidden = false;
     const pad = 14;
     const { offsetWidth: w, offsetHeight: h } = tooltip;

@@ -37,7 +37,7 @@ css/style.css           # color tokens (light/dark), layout, tooltip
 js/timeline.js          # D3 v7 rendering (CDN, pinned d3@7.9.0)
 scripts/fetch_data.py   # builds data/players.json (Python 3 stdlib only)
 data/players.json       # generated; the only data file the page reads
-data/raw/               # cached API responses (delete a file to force a re-fetch)
+data/raw/               # cached API responses plus Hockey-Reference extracts (hr_ids.json, hr_transactions_{hrId}.html); delete a file to force a re-fetch
 ref docs/               # reference screenshot
 ```
 
@@ -46,7 +46,7 @@ Run:
 python3 scripts/fetch_data.py     # prints counts, extent, multi-stint players
 python3 -m http.server 8000       # http://localhost:8000
 ```
-Git remote: https://github.com/dpasserahome/rw_widget.git (branch `main`).
+Git remote: https://github.com/dpasserahome/rw_tenure.git (branch `main`).
 
 ## Data source
 
@@ -56,12 +56,21 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 |---|---|
 | Qualifying skaters | `https://api.nhle.com/stats/rest/en/skater/summary?limit=-1&cayenneExp=seasonId={SEASON} and gameTypeId=3 and teamAbbrevs="DET"` (URL-encoded) |
 | Qualifying goalies | same, with `/goalie/summary` |
-| Career by team/season | `https://api-web.nhle.com/v1/player/{playerId}/landing` → `seasonTotals[]` |
+| Career by team/season, draft | `https://api-web.nhle.com/v1/player/{playerId}/landing` → `seasonTotals[]`, `draftDetails` |
+| Hockey-Reference ids | `https://www.hockey-reference.com/teams/DET/{endYear}.html` (one per Detroit season of any included player) |
+| Transactions | `https://www.hockey-reference.com/players/{x}/{hrId}.html` → `#div_transactions` |
 
 - `SEASON` = `19961997` format. `gameTypeId` 2 = regular season, 3 = playoffs.
 - Detroit seasons: `seasonTotals` rows with `leagueAbbrev == "NHL"`, `teamName.default == "Detroit Red Wings"`, `gamesPlayed >= 1`.
 - Position is the landing `position` field (current or last listed position, not per-season), unless overridden.
 - Inactive gap: every season between two Detroit stints has zero games in all `seasonTotals` rows (any team, league, or game type).
+- Hockey-Reference ids are matched by normalized name (accents stripped, lowercase); `HR_NAME_ALIASES` covers spelling differences (Joey/Joe Kocur). The script stops if a player has no match.
+
+### Acquisitions (`acquisitions()` in `fetch_data.py`)
+
+- Events: the NHL draft (dated June 30 of the draft year) plus parsed HR transactions: trade, free-agent signing (any club, incl. non-NHL), waiver claim ("Claimed by…" / "Selected off waivers…"), expansion draft, retired/released (team = none). Trades of a draft pick before it was used ("as 2nd round draft pick in…") are ignored, so a Detroit draft pick reads as Drafted. Suspensions, tryouts, and loans don't change the team. Unlinked HR team codes are mapped in `HR_UNLINKED_TEAMS` (ANA, QBN).
+- An acquisition is any event that moves the player to Detroit from another team (or none). Each stint shows the latest acquisition before its first season ended (June 30) plus any later acquisitions within it (e.g. Gill left and came back mid-stint).
+- A stint with no new acquisition shows nothing if the player never left Detroit (minor-league spell, e.g. Ward; or a no-games gap, e.g. Hasek, Krupp); otherwise it shows `Unknown` (none currently).
 
 ## `data/players.json` schema
 
@@ -75,7 +84,8 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
       "role": "Forward", "position": "C",
       "stints": [{ "start": 1983, "end": 2005 }],
       "inactive": [],
-      "playoffSeasonsInWindow": [1996, 1997] }
+      "playoffSeasonsInWindow": [1996, 1997],
+      "acquisitions": [{ "season": 1983, "method": "Draft", "year": 1983, "round": 1, "overall": 4 }] }
   ]
 }
 ```
@@ -83,6 +93,7 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 - Seasons are identified by start year (1996 = 1996-97).
 - Stints are inclusive; a bar spans from `start` to `end + 1` on the axis. Stints contain only seasons with Detroit games.
 - `inactive`: inclusive gaps between stints in which the player played nowhere (e.g. Krupp `[{start: 1999, end: 2000}]`). Always present; usually empty.
+- `acquisitions`: in date order. `method` is `Draft` (`year`, `round`, `overall`), `Trade`, `Free agent`, `Waivers` (these three have an ISO `date`, e.g. "1996-10-09", and optional `from` team name), or `Unknown`. `season` is the season it applied to (never before the stint start). Currently 36 free agent, 27 draft, 27 trade, 3 waivers.
 - Players are pre-sorted by role (Forward → Defenseman → Goalie), then first season, last season, and last name. The page renders in file order.
 - Future per-player fields get added to player objects. Don't restructure.
 
@@ -95,7 +106,7 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 - **Column fills** (header and body): the core window is shaded light blue. Cup seasons have an opaque light gold fill (`--cup-fill`) with thin gold edge lines (`--cup-edge`), replacing the blue shading in those columns. The 2004-05 lockout column has a dark grey fill (`--lockout-fill`).
 - **Colors:** validated categorical palette, defined as CSS tokens with light and dark variants. Forward is blue (`#2a78d6` / `#3987e5`), Defenseman orange (`#eb6834` / `#d95926`), Goalie aqua (`#1baf7a` / `#199e70`). The legend covers roles, inactive gaps ("Still with Detroit, no games played"), the core window, Cup seasons, and the lockout.
 - **Season hover:** the season column under the pointer is tinted (`--season-hover` token) in both the sticky header and the body, and its axis label turns bold if that season has one. It clears when the pointer leaves the plot area.
-- **Tooltip:** hovering anywhere on a row shows the name, position and role, stint ranges, any no-games-played ranges, number of Detroit seasons (excluding the lockout), and playoff seasons in the window.
+- **Tooltip:** hovering anywhere on a row shows the name, position and role, stint ranges, acquisitions ("Drafted 1983, 1st round (4th OA)", "Trade from Hartford Whalers, 10/09/1996", "Free agent, 07/01/2007", "Waiver claim from …"; prefixed with the season when there are several), any no-games-played ranges, number of Detroit seasons (excluding the lockout), and Cup wins (Cup seasons in `playoffSeasonsInWindow`, same rule as the filters; "None" if empty).
 - Re-renders on window resize.
 
 ## Filters (`setupFilters` in `js/timeline.js`)
@@ -117,6 +128,7 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 - **Zero-game gaps are dimmed, not broken:** seasons where the player played for no one (Krupp 1999-01 injury, Hasek 2002-03 retirement) are part of the tenure but shown dimmer. They don't count toward "Seasons with Detroit".
 - **Farm-team seasons are not tenure:** a season counts only if the player played for Detroit itself (a call-up with ≥1 Detroit game counts). A season spent only with a minor-league affiliate is a normal break, not a dimmed gap (e.g. Aaron Ward 1995-96). Farm teams and pre-Detroit history are never shown on the page.
 - **Cup team membership = played ≥1 Detroit playoff game that Cup season.** This matches the site's inclusion rule. It isn't the official Cup engraving list.
+- **Acquisition = how Detroit got the player, per stint.** Draft from the NHL API; trades, signings, and waivers from Hockey-Reference transactions. Unsigned draft picks who later sign count as Drafted; pick-for-pick trades before the draft are not shown.
 - **Multiple Cup filters combine with OR.** The user asked for players who won any selected Cup.
 - **Cup and lockout marking:** shown with column fills plus styled season labels and legend entries, not separate header text. This keeps the header to one row of labels.
 
@@ -131,6 +143,8 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 - [x] Per-season playoff player counts match Hockey-Reference for all 11 window seasons (96-97 = 23, 97-98 = 24, 98-99 = 24, 99-00 = 22, 00-01 = 23, 01-02 = 23, 02-03 = 19, 03-04 = 24, 05-06 = 20, 06-07 = 22, 07-08 = 23).
 - [x] No regular-season-only players (guaranteed by construction).
 
+Acquisitions in the tooltip are done (data for all 79 players, no `Unknown`). The tooltip text was checked in Node against the data; it hasn't been checked in a browser screenshot yet.
+
 Cup-team filters (settings modal) are done and were checked by headless Chrome in light and dark mode: modal toggle logic, row counts (1996-97 + 2007-08 = 40 players), and Show all.
 
 **Open questions:** none.
@@ -140,7 +154,7 @@ Cup-team filters (settings modal) are done and were checked by headless Chrome i
 ## Future phases (not started)
 
 - Additional per-player data points (to be specified by the user).
-- In-season join/leave timing and acquisition method (drafted, signed, traded, waivers). Hockey-Reference transaction histories are the likely source.
+- How each player left Detroit (the same HR transactions hold it).
 - Deployment to GitHub Pages.
 
 ## Agent notes
