@@ -1,0 +1,1596 @@
+{
+  "generated": "2026-11-15",
+  "coreWindow": {
+    "start": 1996,
+    "end": 2007
+  },
+  "cupSeasons": [
+    1996,
+    1997,
+    2001,
+    2007
+  ],
+  "players": [
+    {
+      "id": 8452578,
+      "name": "Steve Yzerman",
+      "lastName": "Yzerman",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 1983,
+          "end": 2005
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2005
+      ]
+    },
+    {
+      "id": 8448519,
+      "name": "Joey Kocur",
+      "lastName": "Kocur",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 1984,
+          "end": 1990
+        },
+        {
+          "start": 1996,
+          "end": 1998
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997
+      ]
+    },
+    {
+      "id": 8446788,
+      "name": "Sergei Fedorov",
+      "lastName": "Fedorov",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 1990,
+          "end": 2002
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002
+      ]
+    },
+    {
+      "id": 8456887,
+      "name": "Vyacheslav Kozlov",
+      "lastName": "Kozlov",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 1991,
+          "end": 2000
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000
+      ]
+    },
+    {
+      "id": 8458524,
+      "name": "Martin Lapointe",
+      "lastName": "Lapointe",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 1991,
+          "end": 2000
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000
+      ]
+    },
+    {
+      "id": 8456106,
+      "name": "Dallas Drake",
+      "lastName": "Drake",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 1992,
+          "end": 1993
+        },
+        {
+          "start": 2007,
+          "end": 2007
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2007
+      ]
+    },
+    {
+      "id": 8458192,
+      "name": "Tim Taylor",
+      "lastName": "Taylor",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 1993,
+          "end": 1996
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996
+      ]
+    },
+    {
+      "id": 8458982,
+      "name": "Darren McCarty",
+      "lastName": "McCarty",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 1993,
+          "end": 2003
+        },
+        {
+          "start": 2007,
+          "end": 2008
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2007
+      ]
+    },
+    {
+      "id": 8446485,
+      "name": "Kris Draper",
+      "lastName": "Draper",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 1993,
+          "end": 2010
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8445730,
+      "name": "Doug Brown",
+      "lastName": "Brown",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 1994,
+          "end": 2000
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000
+      ]
+    },
+    {
+      "id": 8448669,
+      "name": "Igor Larionov",
+      "lastName": "Larionov",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 1995,
+          "end": 2002
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002
+      ]
+    },
+    {
+      "id": 8459001,
+      "name": "Kirk Maltby",
+      "lastName": "Maltby",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 1995,
+          "end": 2009
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8451122,
+      "name": "Tomas Sandstrom",
+      "lastName": "Sandstrom",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 1996,
+          "end": 1996
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996
+      ]
+    },
+    {
+      "id": 8458590,
+      "name": "Mike Knuble",
+      "lastName": "Knuble",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 1996,
+          "end": 1997
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1997
+      ]
+    },
+    {
+      "id": 8451302,
+      "name": "Brendan Shanahan",
+      "lastName": "Shanahan",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 1996,
+          "end": 2005
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2005
+      ]
+    },
+    {
+      "id": 8460743,
+      "name": "Tomas Holmstrom",
+      "lastName": "Holmstrom",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 1996,
+          "end": 2011
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8447177,
+      "name": "Brent Gilchrist",
+      "lastName": "Gilchrist",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 1997,
+          "end": 2001
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1997,
+        1998,
+        1999,
+        2000
+      ]
+    },
+    {
+      "id": 8446085,
+      "name": "Wendel Clark",
+      "lastName": "Clark",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 1998,
+          "end": 1998
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1998
+      ]
+    },
+    {
+      "id": 8460061,
+      "name": "Stacy Roest",
+      "lastName": "Roest",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 1998,
+          "end": 1999
+        },
+        {
+          "start": 2002,
+          "end": 2002
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1999
+      ]
+    },
+    {
+      "id": 8452216,
+      "name": "Pat Verbeek",
+      "lastName": "Verbeek",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 1999,
+          "end": 2000
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1999,
+        2000
+      ]
+    },
+    {
+      "id": 8464960,
+      "name": "Boyd Devereaux",
+      "lastName": "Devereaux",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 2000,
+          "end": 2003
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2000,
+        2001,
+        2003
+      ]
+    },
+    {
+      "id": 8468789,
+      "name": "Jason Williams",
+      "lastName": "Williams",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 2000,
+          "end": 2006
+        },
+        {
+          "start": 2009,
+          "end": 2009
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2000,
+        2001,
+        2003,
+        2005
+      ]
+    },
+    {
+      "id": 8450941,
+      "name": "Luc Robitaille",
+      "lastName": "Robitaille",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 2001,
+          "end": 2002
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2001,
+        2002
+      ]
+    },
+    {
+      "id": 8448091,
+      "name": "Brett Hull",
+      "lastName": "Hull",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2001,
+          "end": 2003
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2001,
+        2002,
+        2003
+      ]
+    },
+    {
+      "id": 8467514,
+      "name": "Pavel Datsyuk",
+      "lastName": "Datsyuk",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 2001,
+          "end": 2015
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2001,
+        2002,
+        2003,
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8468083,
+      "name": "Henrik Zetterberg",
+      "lastName": "Zetterberg",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 2002,
+          "end": 2017
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2002,
+        2003,
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8451898,
+      "name": "Steve Thomas",
+      "lastName": "Thomas",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2003,
+          "end": 2003
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2003
+      ]
+    },
+    {
+      "id": 8458537,
+      "name": "Ray Whitney",
+      "lastName": "Whitney",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 2003,
+          "end": 2003
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2003
+      ]
+    },
+    {
+      "id": 8467323,
+      "name": "Mark Mowers",
+      "lastName": "Mowers",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2003,
+          "end": 2005
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2005
+      ]
+    },
+    {
+      "id": 8456966,
+      "name": "Robert Lang",
+      "lastName": "Lang",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 2003,
+          "end": 2006
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2003,
+        2005,
+        2006
+      ]
+    },
+    {
+      "id": 8470201,
+      "name": "Jiri Hudler",
+      "lastName": "Hudler",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2003,
+          "end": 2008
+        },
+        {
+          "start": 2010,
+          "end": 2011
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8468518,
+      "name": "Tomas Kopecky",
+      "lastName": "Kopecky",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2005,
+          "end": 2008
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2006
+      ]
+    },
+    {
+      "id": 8467463,
+      "name": "Mikael Samuelsson",
+      "lastName": "Samuelsson",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2005,
+          "end": 2008
+        },
+        {
+          "start": 2012,
+          "end": 2013
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8466149,
+      "name": "Daniel Cleary",
+      "lastName": "Cleary",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2005,
+          "end": 2014
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8471309,
+      "name": "Johan Franzen",
+      "lastName": "Franzen",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2005,
+          "end": 2015
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8470047,
+      "name": "Valtteri Filppula",
+      "lastName": "Filppula",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 2005,
+          "end": 2012
+        },
+        {
+          "start": 2019,
+          "end": 2020
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8466260,
+      "name": "Kyle Calder",
+      "lastName": "Calder",
+      "role": "Forward",
+      "position": "L",
+      "stints": [
+        {
+          "start": 2006,
+          "end": 2006
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2006
+      ]
+    },
+    {
+      "id": 8459444,
+      "name": "Todd Bertuzzi",
+      "lastName": "Bertuzzi",
+      "role": "Forward",
+      "position": "R",
+      "stints": [
+        {
+          "start": 2006,
+          "end": 2006
+        },
+        {
+          "start": 2009,
+          "end": 2013
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2006
+      ]
+    },
+    {
+      "id": 8469997,
+      "name": "Mark Hartigan",
+      "lastName": "Hartigan",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 2007,
+          "end": 2007
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2007
+      ]
+    },
+    {
+      "id": 8471794,
+      "name": "Darren Helm",
+      "lastName": "Helm",
+      "role": "Forward",
+      "position": "C",
+      "stints": [
+        {
+          "start": 2007,
+          "end": 2020
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2007
+      ]
+    },
+    {
+      "id": 8456870,
+      "name": "Vladimir Konstantinov",
+      "lastName": "Konstantinov",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1991,
+          "end": 1996
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996
+      ]
+    },
+    {
+      "id": 8457063,
+      "name": "Nicklas Lidstrom",
+      "lastName": "Lidstrom",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1991,
+          "end": 2011
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8458519,
+      "name": "Aaron Ward",
+      "lastName": "Ward",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1993,
+          "end": 1994
+        },
+        {
+          "start": 1996,
+          "end": 2000
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1998,
+        1999
+      ]
+    },
+    {
+      "id": 8446789,
+      "name": "Viacheslav Fetisov",
+      "lastName": "Fetisov",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1994,
+          "end": 1997
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997
+      ]
+    },
+    {
+      "id": 8451022,
+      "name": "Bob Rouse",
+      "lastName": "Rouse",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1994,
+          "end": 1997
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997
+      ]
+    },
+    {
+      "id": 8458546,
+      "name": "Jamie Pushor",
+      "lastName": "Pushor",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1995,
+          "end": 1997
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996
+      ]
+    },
+    {
+      "id": 8459443,
+      "name": "Anders Eriksson",
+      "lastName": "Eriksson",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1995,
+          "end": 1998
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1997
+      ]
+    },
+    {
+      "id": 8460540,
+      "name": "Mathieu Dandenault",
+      "lastName": "Dandenault",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1995,
+          "end": 2003
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003
+      ]
+    },
+    {
+      "id": 8449745,
+      "name": "Larry Murphy",
+      "lastName": "Murphy",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1996,
+          "end": 2000
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000
+      ]
+    },
+    {
+      "id": 8458672,
+      "name": "Dmitri Mironov",
+      "lastName": "Mironov",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1997,
+          "end": 1997
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1997
+      ]
+    },
+    {
+      "id": 8449009,
+      "name": "Jamie Macoun",
+      "lastName": "Macoun",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1997,
+          "end": 1998
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1997,
+        1998
+      ]
+    },
+    {
+      "id": 8451107,
+      "name": "Ulf Samuelsson",
+      "lastName": "Samuelsson",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1998,
+          "end": 1998
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1998
+      ]
+    },
+    {
+      "id": 8447187,
+      "name": "Todd Gill",
+      "lastName": "Gill",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1998,
+          "end": 2000
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1998,
+        1999,
+        2000
+      ]
+    },
+    {
+      "id": 8448554,
+      "name": "Uwe Krupp",
+      "lastName": "Krupp",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1998,
+          "end": 1998
+        },
+        {
+          "start": 2001,
+          "end": 2001
+        }
+      ],
+      "inactive": [
+        {
+          "start": 1999,
+          "end": 2000
+        }
+      ],
+      "playoffSeasonsInWindow": [
+        2001
+      ]
+    },
+    {
+      "id": 8446053,
+      "name": "Chris Chelios",
+      "lastName": "Chelios",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1998,
+          "end": 2008
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8446494,
+      "name": "Steve Duchesne",
+      "lastName": "Duchesne",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1999,
+          "end": 2001
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1999,
+        2000,
+        2001
+      ]
+    },
+    {
+      "id": 8467349,
+      "name": "Jiri Fischer",
+      "lastName": "Fischer",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 1999,
+          "end": 2005
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2000,
+        2001,
+        2003
+      ]
+    },
+    {
+      "id": 8449971,
+      "name": "Fredrik Olausson",
+      "lastName": "Olausson",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2001,
+          "end": 2001
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2001
+      ]
+    },
+    {
+      "id": 8458052,
+      "name": "Jiri Slegr",
+      "lastName": "Slegr",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2001,
+          "end": 2001
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2001
+      ]
+    },
+    {
+      "id": 8469701,
+      "name": "Dmitri Bykov",
+      "lastName": "Bykov",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2002,
+          "end": 2002
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2002
+      ]
+    },
+    {
+      "id": 8458454,
+      "name": "Jason Woolley",
+      "lastName": "Woolley",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2002,
+          "end": 2005
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2002,
+        2003
+      ]
+    },
+    {
+      "id": 8451224,
+      "name": "Mathieu Schneider",
+      "lastName": "Schneider",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2002,
+          "end": 2006
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2002,
+        2003,
+        2005,
+        2006
+      ]
+    },
+    {
+      "id": 8456531,
+      "name": "Derian Hatcher",
+      "lastName": "Hatcher",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2003,
+          "end": 2003
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2003
+      ]
+    },
+    {
+      "id": 8459484,
+      "name": "Jamie Rivers",
+      "lastName": "Rivers",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2003,
+          "end": 2005
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2003
+      ]
+    },
+    {
+      "id": 8468509,
+      "name": "Niklas Kronwall",
+      "lastName": "Kronwall",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2003,
+          "end": 2018
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2005,
+        2007
+      ]
+    },
+    {
+      "id": 8471187,
+      "name": "Brett Lebda",
+      "lastName": "Lebda",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2005,
+          "end": 2009
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8468534,
+      "name": "Andreas Lilja",
+      "lastName": "Lilja",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2005,
+          "end": 2009
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2005,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8470724,
+      "name": "Kyle Quincey",
+      "lastName": "Quincey",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2005,
+          "end": 2007
+        },
+        {
+          "start": 2011,
+          "end": 2015
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2006
+      ]
+    },
+    {
+      "id": 8462258,
+      "name": "Danny Markov",
+      "lastName": "Markov",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2006,
+          "end": 2006
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2006
+      ]
+    },
+    {
+      "id": 8467856,
+      "name": "Brian Rafalski",
+      "lastName": "Rafalski",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2007,
+          "end": 2010
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2007
+      ]
+    },
+    {
+      "id": 8467331,
+      "name": "Brad Stuart",
+      "lastName": "Stuart",
+      "role": "Defenseman",
+      "position": "D",
+      "stints": [
+        {
+          "start": 2007,
+          "end": 2011
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2007
+      ]
+    },
+    {
+      "id": 8458568,
+      "name": "Chris Osgood",
+      "lastName": "Osgood",
+      "role": "Goalie",
+      "position": "G",
+      "stints": [
+        {
+          "start": 1993,
+          "end": 2000
+        },
+        {
+          "start": 2005,
+          "end": 2010
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2007
+      ]
+    },
+    {
+      "id": 8452217,
+      "name": "Mike Vernon",
+      "lastName": "Vernon",
+      "role": "Goalie",
+      "position": "G",
+      "stints": [
+        {
+          "start": 1994,
+          "end": 1996
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1996
+      ]
+    },
+    {
+      "id": 8459357,
+      "name": "Kevin Hodson",
+      "lastName": "Hodson",
+      "role": "Goalie",
+      "position": "G",
+      "stints": [
+        {
+          "start": 1995,
+          "end": 1998
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1997
+      ]
+    },
+    {
+      "id": 8459549,
+      "name": "Norm Maracle",
+      "lastName": "Maracle",
+      "role": "Goalie",
+      "position": "G",
+      "stints": [
+        {
+          "start": 1997,
+          "end": 1998
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1998
+      ]
+    },
+    {
+      "id": 8450651,
+      "name": "Bill Ranford",
+      "lastName": "Ranford",
+      "role": "Goalie",
+      "position": "G",
+      "stints": [
+        {
+          "start": 1998,
+          "end": 1998
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        1998
+      ]
+    },
+    {
+      "id": 8459308,
+      "name": "Manny Legace",
+      "lastName": "Legace",
+      "role": "Goalie",
+      "position": "G",
+      "stints": [
+        {
+          "start": 1999,
+          "end": 2005
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2001,
+        2003,
+        2005
+      ]
+    },
+    {
+      "id": 8447687,
+      "name": "Dominik Hasek",
+      "lastName": "Hasek",
+      "role": "Goalie",
+      "position": "G",
+      "stints": [
+        {
+          "start": 2001,
+          "end": 2001
+        },
+        {
+          "start": 2003,
+          "end": 2003
+        },
+        {
+          "start": 2006,
+          "end": 2007
+        }
+      ],
+      "inactive": [
+        {
+          "start": 2002,
+          "end": 2002
+        }
+      ],
+      "playoffSeasonsInWindow": [
+        2001,
+        2006,
+        2007
+      ]
+    },
+    {
+      "id": 8448382,
+      "name": "Curtis Joseph",
+      "lastName": "Joseph",
+      "role": "Goalie",
+      "position": "G",
+      "stints": [
+        {
+          "start": 2002,
+          "end": 2003
+        }
+      ],
+      "inactive": [],
+      "playoffSeasonsInWindow": [
+        2002,
+        2003
+      ]
+    }
+  ]
+}
