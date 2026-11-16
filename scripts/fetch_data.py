@@ -11,6 +11,8 @@ import unicodedata
 import urllib.parse
 import urllib.request
 
+from payroll import payroll_seasons
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW_DIR = os.path.join(ROOT, "data", "raw")
 OUT_PATH = os.path.join(ROOT, "data", "players.json")
@@ -317,6 +319,8 @@ def main():
         "generated": datetime.date.today().isoformat(),
         "coreWindow": {"start": CORE_START, "end": CORE_END},
         "cupSeasons": CUP_SEASONS,
+        "payroll": payroll_seasons(min(p["stints"][0]["start"] for p in players),
+                                   max(p["stints"][-1]["end"] for p in players)),
         "players": players,
     }
     with open(OUT_PATH, "w") as f:
@@ -340,6 +344,14 @@ def main():
             print(f"Inactive gaps: {p['name']} {p['inactive']}")
     for p in players:
         print(f"Acquired: {p['name']}: " + "; ".join(json.dumps(a) for a in p["acquisitions"]))
+    for e in out["payroll"]:
+        if e.get("estimate"):
+            print(f"Payroll {e['season']}: estimated league average {e['leagueAvg'] / 1e6:.1f}M")
+        else:
+            print(f"Payroll {e['season']}: DET {e['detroit'] / 1e6:.1f}M, {e['rank']} of {e['teams']}, "
+                  f"{e['detroit'] / e['leagueAvg']:.0%} of average, {e['detroit'] / e['topOthersAvg']:.0%} of top 5 others"
+                  + (f", {e['detroit'] / e['cap']:.0%} of cap" if "cap" in e else "")
+                  + f" ({e['measure']}, {e['source']})")
 
 
 if __name__ == "__main__":

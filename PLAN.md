@@ -24,7 +24,8 @@ This file is the single source of truth for requirements, design, and status. **
 9. **On-page note (required):** only players with ≥1 Detroit playoff game from 1996-97 through 2007-08 are shown.
 10. **Layout:** vertical scrolling is fine; don't force-fit the viewport.
 11. **Filters:** a settings (gear) button at the right of the title row opens a modal. It has two sections: **Cup teams** (All players, default, plus one checkbox per Cup team) and **Acquired by** (Any method, default, plus Draft, Trade, Free agent, Waivers). In each section the "all" option and the value checkboxes are mutually exclusive, and several values can be checked at once. A **Show only / Highlight** switch sets whether the selection hides non-matching players or just highlights the matching rows.
-12. **Hosting:** GitHub Pages at https://dpasserahome.github.io/rw_tenure/ (enabled 2026-11-16; serves `main`, root folder, and republishes on every push). Locally, use a static server. Use relative paths only and no build step.
+12. **Season payroll tooltip:** hovering any season in the header shows Detroit's payroll that season, its rank, its percentage of the league average, and its percentage of the average of the five highest *other* payrolls, and its percentage of the salary cap ("No salary cap" before 2005-06). Seasons before 1989-90 show an estimated league average and say why. The payroll sources are cited in a footnote under the chart.
+13. **Hosting:** GitHub Pages at https://dpasserahome.github.io/rw_tenure/ (enabled 2026-11-16; serves `main`, root folder, and republishes on every push). Locally, use a static server. Use relative paths only and no build step.
 
 ## Files
 
@@ -32,12 +33,13 @@ This file is the single source of truth for requirements, design, and status. **
 PLAN.md                 # this file
 CLAUDE.md               # pointer to this file for agents
 README.md               # live URL and 3-sentence project summary
-index.html              # page shell: title row + settings button, note, legend, filter status, #chart, filter modal, #tooltip
+index.html              # page shell: title row + settings button, note, legend, filter status, #chart, payroll sources footer, filter modal, #tooltip
 css/style.css           # color tokens (light/dark), layout, tooltip
 js/timeline.js          # D3 v7 rendering (CDN, pinned d3@7.9.0)
 scripts/fetch_data.py   # builds data/players.json (Python 3 stdlib only)
+scripts/payroll.py      # payroll section of players.json, imported by fetch_data.py
 data/players.json       # generated; the only data file the page reads
-data/raw/               # cached API responses plus Hockey-Reference extracts (hr_ids.json, hr_transactions_{hrId}.html); delete a file to force a re-fetch
+data/raw/               # cached API responses, Hockey-Reference extracts (hr_ids.json, hr_transactions_{hrId}.html), fort_nhl_payroll.xlsx, capfriendly_archive_{endYear}.html; delete a file to force a re-fetch
 ref docs/               # reference screenshot
 ```
 
@@ -80,6 +82,25 @@ NHL official stats API (public JSON, no key) for rosters, seasons, positions and
 - `left`: a move out of Detroit dated in the stint's last season, with no move back to Detroit later that season. Retirements ("Left") never count. Currently 9: Kocur 1990-91, Drake 1993-94, Pushor 1997-98 (Cup), Eriksson and Hodson 1998-99, Gilchrist 2001-02 (Cup), Roest 2002-03, Rivers 2005-06, J. Williams 2006-07.
 - Moves inside a stint (Gill left in summer 1999 and came back in March 2000) aren't drawn.
 
+### Payroll (`scripts/payroll.py`)
+
+One entry per season over the chart's extent (1983-84 to 2020-21), skipping the 2004-05 lockout. For each season it takes every team's payroll from one source, so rank and percentages always compare like with like.
+
+| Seasons | Source | Measure |
+|---|---|---|
+| 1989-90 to 1999-00 | Rodney Fort's Sports Business Data, `NHL Payrollindex.xlsx` (Google Drive id `1-2Yi-DkwRazL50LHoRbf4kmmOiyORSq8`); 1996-97 and 1997-98 are USA Today data | Salaries |
+| 2000-01 to 2013-14 | Fort's USA Today salary-database columns (Fort also has HockeyZonePlus/NHLPA/SBN columns for some of these; not used) | Salaries |
+| 2014-15 | Fort's Spotrac column, with a tooltip caveat | Cap hits |
+| 2015-16 to 2020-21 | CapFriendly "Past Salary Cap Payrolls", final cap hit, from Wayback snapshots (`CAPFRIENDLY_SNAPSHOTS`) | Cap hits |
+| 1983-84 to 1988-89 | Estimate only: Fort's 1989-90 league-average payroll ($6.61M) × the Sporting News average salary that season ÷ 1989-90's ($220,606), from Fort's `NHLAveSal46-7to02-03.xls` (hard-coded in `TSN_AVERAGE_SALARY`, since that file is .xls). Detroit's own payroll is unknown. | — |
+
+- **Fedorov (`ADJUSTMENTS`):** 1997-98 adds $28M to Detroit. Fort's 1997-98 player list has no Fedorov (he was holding out), and the listed Detroit players add up to the published $28.4M. His $28M for 1997-98 (a $2M salary, a $14M signing bonus, and a $12M bonus for reaching the conference final) is from HockeyZonePlus's salary history. With it, Detroit is 1st of 26 instead of 10th.
+- **Why not Spotrac after 2014-15:** Fort's Spotrac figures put Detroit 18th-24th in 2015-19, while CapFriendly's final cap hits put them 1st-3rd. Spotrac's numbers appear to leave out injured players' cap hits, which matters for Detroit in those years. CapFriendly has no archived 2014-15 page.
+- **Salary cap (`SALARY_CAP`):** the CBA upper limit for 2005-06 to 2020-21, hard-coded ($39.0M to $81.5M). It matches the archived Wikipedia table except 2012-13, which uses $70.2M (full-season figure, prorated for the 48-game season, per contemporary reports) instead of Wikipedia's $60M, because the payrolls are full-season figures too. 2012-13 gets `capNote` "prorated for the 48-game season". In salary seasons where Detroit's salaries exceed the cap (2005-06, 2009-10, 2010-11, 2013-14), the note adds that salaries paid can exceed the cap, which counts each contract's average annual value.
+- **LTIR note:** when CapFriendly's "LTIR used" for Detroit is at least $0.5M (2015-16 to 2018-19), the tooltip says how far over the cap long-term injured reserve let them go.
+- **Checks:** the script stops if a season's team count doesn't match the league size (`TEAM_COUNTS`). Cross-checked against HockeyZonePlus's payroll table (Wayback, `hockeyzoneplus.com/$maseq_e.htm`) and the deleted Wikipedia "List of team payrolls in the NHL" (Wayback 2024-06-03); they match Fort's columns.
+- Wayback sometimes returns empty pages or "Temporarily Offline" when requests come quickly; `fetch_cached` retries with a delay.
+
 ## `data/players.json` schema
 
 ```json
@@ -87,6 +108,11 @@ NHL official stats API (public JSON, no key) for rosters, seasons, positions and
   "generated": "YYYY-MM-DD",
   "coreWindow": { "start": 1996, "end": 2007 },
   "cupSeasons": [1996, 1997, 2001, 2007],
+  "payroll": [
+    { "season": 1983, "estimate": true, "leagueAvg": 3557964, "avgSalary": 118788 },
+    { "season": 1997, "measure": "salary", "source": "USA Today, via Rodney Fort", "note": "Includes Sergei Fedorov's $28M…",
+      "detroit": 56400000, "rank": 1, "teams": 26, "leagueAvg": 27876923, "topOthersAvg": 38020000 }
+  ],
   "players": [
     { "id": 8446120, "name": "Steve Yzerman", "hrId": "yzermst01", "lastName": "Yzerman",
       "role": "Forward", "position": "C",
@@ -104,6 +130,7 @@ NHL official stats API (public JSON, no key) for rosters, seasons, positions and
 - `inactive`: inclusive gaps between stints in which the player played nowhere (e.g. Krupp `[{start: 1999, end: 2000}]`). Always present; usually empty.
 - `acquisitions`: in date order. `method` is `Draft` (`year`, `round`, `overall`), `Trade`, `Free agent`, `Waivers` (these three have an ISO `date`, e.g. "1996-10-09", and optional `from` team name), or `Unknown`. `season` is the season it applied to (never before the stint start). Currently 37 free agent, 28 trade, 27 draft, 3 waivers.
 - Players are pre-sorted by role (Forward → Defenseman → Goalie), then first season, last season, and last name. The page renders in file order.
+- `payroll`: one entry per season in the extent except 2004. `measure` is `salary` or `cap`; `topOthersAvg` is the average of the five highest payrolls other than Detroit's; `leagueAvg` includes Detroit; `note` is optional (Fedorov, Spotrac caveat, LTIR, salaries over the cap). `cap` (2005 on) is the salary cap; `capNote` is optional. Amounts are whole dollars.
 - Future per-player fields get added to player objects. Don't restructure.
 
 ## Rendering (`js/timeline.js`)
@@ -117,6 +144,8 @@ NHL official stats API (public JSON, no key) for rosters, seasons, positions and
 - **Colors:** validated categorical palette, defined as CSS tokens with light and dark variants. Forward is blue (`#2a78d6` / `#3987e5`), Defenseman orange (`#eb6834` / `#d95926`), Goalie aqua (`#1baf7a` / `#199e70`). The legend covers roles, inactive gaps ("Still with Detroit, no games played"), the core window, Cup seasons, and the lockout.
 - **Season hover:** the season column under the pointer is tinted (`--season-hover` token) in both the sticky header and the body, and its axis label turns bold if that season has one. It clears when the pointer leaves the plot area.
 - **Tooltip:** hovering anywhere on a row shows the name, position and role, stint ranges, acquisitions ("Drafted 1983, 1st round (4th OA)", "Trade from Hartford Whalers, 10/09/1996", "Free agent, 07/01/2007", "Waiver claim from …"; prefixed with the season when there are several), any no-games-played ranges, number of Detroit seasons (excluding the lockout), and Cup wins (Cup seasons in `playoffSeasonsInWindow`, same rule as the filters; "None" if empty).
+- **Season payroll tooltip:** hovering anywhere in the sticky header over a season column shows "{season} · Stanley Cup" (if a Cup season), then Detroit's payroll with its rank ("$56.4M (1st of 26)"), "vs. league average ($27.9M): 202%", "vs. top 5 other teams ($38.0M avg): 148%", then "vs. salary cap ($50.3M): 89%" (2012-13 adds ", prorated for the 48-game season" inside the parentheses) or a muted "No salary cap", then any note, and a muted line with the measure ("Player salaries" or "Salary-cap hits") and source. Estimated seasons say the payroll wasn't published and give "League average: about $X (estimate)" and "No salary cap" with an explanation; 2004-05 says "No season (lockout)". A muted italic hint, "Hover a season for payroll", sits in the header's empty name column. Money shows as $X.XM (or $XK under $1M).
+- **Payroll footnote:** a `footer.sources` under the chart names the sources by season range (with links to Fort's data page and an archived CapFriendly page), says which seasons are salaries vs. cap hits, that salary caps are the CBA upper limits, mentions the Fedorov adjustment, and explains the pre-1989-90 estimate.
 - Re-renders on window resize.
 
 ## Filters (`setupFilters` in `js/timeline.js`)
@@ -147,6 +176,11 @@ NHL official stats API (public JSON, no key) for rosters, seasons, positions and
 - **Highlight is a mode of the Cup filter, not a separate selection.** The user chose one shared selection with a Show only / Highlight switch over independent show and highlight controls (simpler modal). Every match gets the same highlight regardless of how many checked values the player matches.
 - **Acquisition filter: OR within the group, AND with the Cup group, matching any stint's acquisition.** Standard faceted-filter behavior; per-stint matching against the Cup season wasn't requested. Gold matches the Cup columns; red accent would compete with the role colors.
 - **Mid-season moves are drawn as a half-filled column, not placed by date.** The user tried date-proportional ends and chose a fixed half: it reads more clearly, and hovering gives specifics. It applies to arrivals and departures in every season, not just Cup seasons. No legend swatch and no departure line in the tooltip (user's call). Players who left before a Cup run already don't count as Cup team members.
+- **Payroll covers every season, not just Cup seasons** (user's call), from 1989-90 with real data and estimated league averages before that. Detroit's pre-1989-90 payroll isn't estimated: no team-level data exists, and projecting their 1989-90 standing backward would be invented.
+- **Fedorov's $28M is added to 1997-98** (user's call), with a tooltip note on the holdout, offer sheet and bonuses.
+- **"Upper tier" = average of the five highest other payrolls, plus rank.** Excluding Detroit avoids comparing a #1 team partly with itself.
+- **Salary cap line in every tooltip** (user's request): "No salary cap" before 2005-06. The user approved three adjustments: a note where salaries paid exceed the cap (it counts cap hits, not salaries), $70.2M for 2012-13 with a proration note, and $X.XM formatting with "No salary cap" in the estimate seasons too.
+- **Salaries through 2013-14, cap hits after.** Only cap hits are available after USA Today's database ends. Ratios are computed within a season from one source, so the switch doesn't distort them. The tooltip names the measure.
 - **Cup and lockout marking:** shown with column fills plus styled season labels and legend entries, not separate header text. This keeps the header to one row of labels.
 
 ## Status
@@ -168,9 +202,11 @@ Also done: acquisitions in the tooltip (all 79 players, no `Unknown`), Cup-team 
 - Half-column bars (Gilchrist, Pushor, Murphy) in light and dark mode.
 - Name links: clickable, open a new tab, and still show the tooltip.
 
+Also done (2026-11-16): the season payroll tooltip and sources footnote. Checked in headless Chrome, light and dark: 1997-98 (Fedorov note), 1985-86 (estimate), 2004-05 (lockout), 2018-19 (LTIR note), 2001-02, and the footer. The salary-cap line was checked the same way on 2013-14 (over-cap note), 2012-13 (proration), 2007-08, 1997-98 and 1985-86.
+
 **Open questions:** none.
 
-**Next steps:** do the pending browser check (or ask the user to), then wait for the user's next requirements.
+**Next steps:** the pending browser checks above, or ask the user to do them. Then wait for the user's next requirements.
 
 ## Future phases (not started)
 

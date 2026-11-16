@@ -107,6 +107,8 @@
       .attr("transform", (s) => `translate(${x(s + 0.5)},-10) rotate(${-LABEL_ANGLE})`)
       .text(seasonLabel);
     axis.append("line").attr("x1", LABEL_W).attr("x2", LABEL_W + plotW).attr("y1", 0).attr("y2", 0);
+    axisSvg.append("text").attr("class", "axis-hint").attr("x", 8).attr("y", AXIS_H - 12)
+      .text("Hover a season for payroll");
 
     // Body
     const { rows, height } = layoutRows(players);
@@ -174,13 +176,21 @@
       .text((r) => r.player.name);
 
     // Highlight the season column under the pointer, in both the header and the body
+    const seasonAt = (event, target) => {
+      const [px] = d3.pointer(event, target.node());
+      const s = Math.floor(x.invert(px));
+      return px >= LABEL_W && s >= minYear && s < maxYear ? s : null;
+    };
     for (const target of [axisSvg, svg]) {
-      target.on("mousemove.season", (event) => {
-        const [px] = d3.pointer(event, target.node());
-        const s = Math.floor(x.invert(px));
-        highlightSeason(px >= LABEL_W && s >= minYear && s < maxYear ? s : null);
-      }).on("mouseleave.season", () => highlightSeason(null));
+      target.on("mousemove.season", (event) => highlightSeason(seasonAt(event, target)))
+        .on("mouseleave.season", () => highlightSeason(null));
     }
+    // In the header, show that season's payroll
+    const payrollBySeason = new Map(data.payroll.map((e) => [e.season, e]));
+    axisSvg.on("mousemove.payroll", (event) => {
+      const s = seasonAt(event, axisSvg);
+      if (s === null) hideTooltip(); else showSeasonTooltip(event, s, payrollBySeason.get(s), cupSeasons.includes(s));
+    }).on("mouseleave.payroll", hideTooltip);
 
     function highlightSeason(s) {
       for (const h of [axisHover, bodyHover]) {
@@ -250,6 +260,40 @@
       ${inactive ? `<div class="tt-row"><span class="tt-key">No games played:</span><br>${inactive}</div>` : ""}
       <div class="tt-row"><span class="tt-key">Seasons with Detroit:</span> ${seasonCount}</div>
       <div class="tt-row"><span class="tt-key">Cup wins:</span> ${cupWins.length ? cupWins.map(shortSeason).join(", ") : "None"}</div>`;
+    placeTooltip(event);
+  }
+
+  const money = (v) => v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : `$${Math.round(v / 1e3)}K`;
+  const percent = (v, of) => `${Math.round(v / of * 100)}%`;
+
+  function showSeasonTooltip(event, s, e, isCup) {
+    let body;
+    if (s === LOCKOUT_SEASON) {
+      body = `<div class="tt-row">No season (lockout)</div>`;
+    } else if (!e) {
+      body = `<div class="tt-row">No payroll data</div>`;
+    } else if (e.estimate) {
+      body = `
+        <div class="tt-row"><span class="tt-key">Detroit payroll:</span> not published</div>
+        <div class="tt-row"><span class="tt-key">League average:</span> about ${money(e.leagueAvg)} (estimate)</div>
+        <div class="tt-row"><span class="tt-key">No salary cap</span></div>
+        <div class="tt-note">Team payrolls weren't made public until 1989-90. This scales the 1989-90 league average by the change in the NHL's average salary (${money(e.avgSalary)} this season).</div>`;
+    } else {
+      body = `
+        <div class="tt-row"><span class="tt-key">Detroit payroll:</span> ${money(e.detroit)} (${ordinal(e.rank)} of ${e.teams})</div>
+        <div class="tt-row"><span class="tt-key">vs. league average (${money(e.leagueAvg)}):</span> ${percent(e.detroit, e.leagueAvg)}</div>
+        <div class="tt-row"><span class="tt-key">vs. top 5 other teams (${money(e.topOthersAvg)} avg):</span> ${percent(e.detroit, e.topOthersAvg)}</div>
+        <div class="tt-row">${e.cap
+          ? `<span class="tt-key">vs. salary cap (${money(e.cap)}${e.capNote ? `, ${e.capNote}` : ""}):</span> ${percent(e.detroit, e.cap)}`
+          : `<span class="tt-key">No salary cap</span>`}</div>
+        ${e.note ? `<div class="tt-note">${e.note}</div>` : ""}
+        <div class="tt-source">${e.measure === "cap" ? "Salary-cap hits" : "Player salaries"} · ${e.source}</div>`;
+    }
+    tooltip.innerHTML = `<div class="tt-name">${seasonLabel(s)}${isCup ? " · Stanley Cup" : ""}</div>${body}`;
+    placeTooltip(event);
+  }
+
+  function placeTooltip(event) {
     tooltip.hidden = false;
     const pad = 14;
     const { offsetWidth: w, offsetHeight: h } = tooltip;

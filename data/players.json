@@ -10,6 +10,381 @@
     2001,
     2007
   ],
+  "payroll": [
+    {
+      "season": 1983,
+      "estimate": true,
+      "leagueAvg": 3561543,
+      "avgSalary": 118788
+    },
+    {
+      "season": 1984,
+      "estimate": true,
+      "leagueAvg": 3815943,
+      "avgSalary": 127273
+    },
+    {
+      "season": 1985,
+      "estimate": true,
+      "leagueAvg": 4324714,
+      "avgSalary": 144242
+    },
+    {
+      "season": 1986,
+      "estimate": true,
+      "leagueAvg": 5087914,
+      "avgSalary": 169697
+    },
+    {
+      "season": 1987,
+      "estimate": true,
+      "leagueAvg": 5342315,
+      "avgSalary": 178182
+    },
+    {
+      "season": 1988,
+      "estimate": true,
+      "leagueAvg": 5636681,
+      "avgSalary": 188000
+    },
+    {
+      "season": 1989,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 5800000,
+      "rank": 14,
+      "teams": 21,
+      "leagueAvg": 6614286,
+      "topOthersAvg": 8180000
+    },
+    {
+      "season": 1990,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 10000000,
+      "rank": 4,
+      "teams": 21,
+      "leagueAvg": 8038095,
+      "topOthersAvg": 10540000
+    },
+    {
+      "season": 1991,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 12000000,
+      "rank": 4,
+      "teams": 22,
+      "leagueAvg": 10168182,
+      "topOthersAvg": 13320000
+    },
+    {
+      "season": 1992,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 11715000,
+      "rank": 5,
+      "teams": 24,
+      "leagueAvg": 9999741,
+      "topOthersAvg": 13460200
+    },
+    {
+      "season": 1993,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 16600000,
+      "rank": 5,
+      "teams": 26,
+      "leagueAvg": 12950000,
+      "topOthersAvg": 18260000
+    },
+    {
+      "season": 1994,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 20530000,
+      "rank": 5,
+      "teams": 26,
+      "leagueAvg": 15967500,
+      "topOthersAvg": 22475200
+    },
+    {
+      "season": 1995,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 28544200,
+      "rank": 2,
+      "teams": 26,
+      "leagueAvg": 19769666,
+      "topOthersAvg": 26235542
+    },
+    {
+      "season": 1996,
+      "measure": "salary",
+      "source": "USA Today, via Rodney Fort",
+      "detroit": 28300000,
+      "rank": 4,
+      "teams": 26,
+      "leagueAvg": 23953846,
+      "topOthersAvg": 31880000
+    },
+    {
+      "season": 1997,
+      "measure": "salary",
+      "source": "USA Today, via Rodney Fort",
+      "note": "Includes Sergei Fedorov's $28M, missing from the published payroll. He held out until February 1998, then signed a six-year, $38M offer sheet with Carolina. Detroit matched it, and its $14M signing bonus and $12M bonus for reaching the conference final were both paid that season.",
+      "detroit": 56400000,
+      "rank": 1,
+      "teams": 26,
+      "leagueAvg": 27876923,
+      "topOthersAvg": 38020000
+    },
+    {
+      "season": 1998,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 48217610,
+      "rank": 1,
+      "teams": 27,
+      "leagueAvg": 29704077,
+      "topOthersAvg": 38097119
+    },
+    {
+      "season": 1999,
+      "measure": "salary",
+      "source": "Rodney Fort's Sports Business Data",
+      "detroit": 43395849,
+      "rank": 3,
+      "teams": 28,
+      "leagueAvg": 31619645,
+      "topOthersAvg": 46224572
+    },
+    {
+      "season": 2000,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 55107500,
+      "rank": 2,
+      "teams": 30,
+      "leagueAvg": 33375943,
+      "topOthersAvg": 49558407
+    },
+    {
+      "season": 2001,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 66643750,
+      "rank": 1,
+      "teams": 30,
+      "leagueAvg": 38011852,
+      "topOthersAvg": 57944682
+    },
+    {
+      "season": 2002,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 68410506,
+      "rank": 4,
+      "teams": 30,
+      "leagueAvg": 41939715,
+      "topOthersAvg": 69006957
+    },
+    {
+      "season": 2003,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 77856109,
+      "rank": 1,
+      "teams": 30,
+      "leagueAvg": 44400490,
+      "topOthersAvg": 67816689
+    },
+    {
+      "season": 2005,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 39578300,
+      "rank": 7,
+      "teams": 30,
+      "leagueAvg": 34309972,
+      "topOthersAvg": 42738736,
+      "cap": 39000000,
+      "note": "Salaries paid can exceed the cap, which counts each contract's average annual value."
+    },
+    {
+      "season": 2006,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 39872000,
+      "rank": 18,
+      "teams": 30,
+      "leagueAvg": 40292446,
+      "topOthersAvg": 45644785,
+      "cap": 44000000
+    },
+    {
+      "season": 2007,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 44633000,
+      "rank": 16,
+      "teams": 30,
+      "leagueAvg": 44369521,
+      "topOthersAvg": 55334610,
+      "cap": 50300000
+    },
+    {
+      "season": 2008,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 56400000,
+      "rank": 8,
+      "teams": 30,
+      "leagueAvg": 51387176,
+      "topOthersAvg": 61664563,
+      "cap": 56700000
+    },
+    {
+      "season": 2009,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 61735000,
+      "rank": 3,
+      "teams": 30,
+      "leagueAvg": 51750270,
+      "topOthersAvg": 61799146,
+      "cap": 56800000,
+      "note": "Salaries paid can exceed the cap, which counts each contract's average annual value."
+    },
+    {
+      "season": 2010,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 64325000,
+      "rank": 7,
+      "teams": 30,
+      "leagueAvg": 54173190,
+      "topOthersAvg": 67654500,
+      "cap": 59400000,
+      "note": "Salaries paid can exceed the cap, which counts each contract's average annual value."
+    },
+    {
+      "season": 2011,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 64275000,
+      "rank": 10,
+      "teams": 30,
+      "leagueAvg": 56657728,
+      "topOthersAvg": 69038200,
+      "cap": 64300000
+    },
+    {
+      "season": 2012,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 63400000,
+      "rank": 11,
+      "teams": 30,
+      "leagueAvg": 58329406,
+      "topOthersAvg": 73911300,
+      "cap": 70200000,
+      "capNote": "prorated for the 48-game season"
+    },
+    {
+      "season": 2013,
+      "measure": "salary",
+      "source": "USA Today salary database, via Rodney Fort",
+      "detroit": 73232500,
+      "rank": 3,
+      "teams": 30,
+      "leagueAvg": 61146631,
+      "topOthersAvg": 73741500,
+      "cap": 64300000,
+      "note": "Salaries paid can exceed the cap, which counts each contract's average annual value."
+    },
+    {
+      "season": 2014,
+      "measure": "cap",
+      "source": "Spotrac, via Rodney Fort",
+      "note": "Spotrac's figure, which may leave out injured players' cap hits. Later seasons use CapFriendly.",
+      "detroit": 65703118,
+      "rank": 14,
+      "teams": 30,
+      "leagueAvg": 64528534,
+      "topOthersAvg": 70838066,
+      "cap": 69000000
+    },
+    {
+      "season": 2015,
+      "measure": "cap",
+      "source": "CapFriendly (archived)",
+      "note": "Includes $1.8M over the cap, allowed because injured players were on long-term injured reserve.",
+      "detroit": 73166539,
+      "rank": 3,
+      "teams": 30,
+      "leagueAvg": 68235857,
+      "topOthersAvg": 73037171,
+      "cap": 71400000
+    },
+    {
+      "season": 2016,
+      "measure": "cap",
+      "source": "CapFriendly (archived)",
+      "note": "Includes $5.5M over the cap, allowed because injured players were on long-term injured reserve.",
+      "detroit": 78458260,
+      "rank": 1,
+      "teams": 30,
+      "leagueAvg": 71282332,
+      "topOthersAvg": 75452928,
+      "cap": 73000000
+    },
+    {
+      "season": 2017,
+      "measure": "cap",
+      "source": "CapFriendly (archived)",
+      "note": "Includes $2.9M over the cap, allowed because injured players were on long-term injured reserve.",
+      "detroit": 77366871,
+      "rank": 3,
+      "teams": 31,
+      "leagueAvg": 71667087,
+      "topOthersAvg": 76804058,
+      "cap": 75000000
+    },
+    {
+      "season": 2018,
+      "measure": "cap",
+      "source": "CapFriendly (archived)",
+      "note": "Includes $6.9M over the cap, allowed because injured players were on long-term injured reserve.",
+      "detroit": 86422598,
+      "rank": 1,
+      "teams": 31,
+      "leagueAvg": 75390710,
+      "topOthersAvg": 79939214,
+      "cap": 79500000
+    },
+    {
+      "season": 2019,
+      "measure": "cap",
+      "source": "CapFriendly (archived)",
+      "detroit": 79969005,
+      "rank": 19,
+      "teams": 31,
+      "leagueAvg": 80440005,
+      "topOthersAvg": 86050133,
+      "cap": 81500000
+    },
+    {
+      "season": 2020,
+      "measure": "cap",
+      "source": "CapFriendly (archived)",
+      "detroit": 73888274,
+      "rank": 28,
+      "teams": 31,
+      "leagueAvg": 81918805,
+      "topOthersAvg": 89871868,
+      "cap": 81500000
+    }
+  ],
   "players": [
     {
       "id": 8452578,

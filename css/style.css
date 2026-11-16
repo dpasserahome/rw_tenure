@@ -172,3 +172,11 @@ h1 { margin: 0; font-size: 24px; }
 .tooltip .tt-name { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
 .tooltip .tt-row { color: var(--text-secondary); }
 .tooltip .tt-key { color: var(--text-muted); }
+.tooltip .tt-note { margin-top: 4px; color: var(--text-secondary); font-size: 11px; }
+.tooltip .tt-source { margin-top: 4px; color: var(--text-muted); font-size: 11px; }
+
+.axis-hint { fill: var(--text-muted); font-size: 11px; font-style: italic; }
+
+.sources { max-width: 1400px; margin: 0 auto; padding: 0 16px 32px; font-size: 12px; color: var(--text-secondary); }
+.sources p { margin: 0 0 6px; max-width: 90ch; }
+.sources a { color: inherit; }
