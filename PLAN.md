@@ -50,7 +50,7 @@ Git remote: https://github.com/dpasserahome/rw_tenure.git (branch `main`). Live 
 
 ## Data source
 
-NHL official stats API (public JSON, no key). Spot-check against Hockey-Reference.
+NHL official stats API (public JSON, no key) for rosters, seasons, positions and the draft. Hockey-Reference for player ids (also used for the name links) and transactions, and for verification.
 
 | Purpose | Endpoint |
 |---|---|
@@ -135,7 +135,7 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 
 ## Decisions
 
-- **NHL API as the primary source:** structured and official. Hockey-Reference is for verification and future transaction data.
+- **NHL API as the primary source:** structured and official. Hockey-Reference fills what the API lacks (transactions) and is used for verification.
 - **Lockout bridging:** a player with Detroit seasons on both sides of 2004-05 has one continuous stint.
 - **Row order:** within each role, sort by start season, then end season, then name.
 - **Dandenault is a Defenseman** (override `D`): he played defense for most of his Detroit tenure; the API lists `R`.
@@ -160,28 +160,25 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 - [x] Per-season playoff player counts match Hockey-Reference for all 11 window seasons (96-97 = 23, 97-98 = 24, 98-99 = 24, 99-00 = 22, 00-01 = 23, 01-02 = 23, 02-03 = 19, 03-04 = 24, 05-06 = 20, 06-07 = 22, 07-08 = 23).
 - [x] No regular-season-only players (guaranteed by construction).
 
-Acquisitions in the tooltip are done (data for all 79 players, no `Unknown`). The tooltip text was checked in Node against the data; it hasn't been checked in a browser screenshot yet.
+Also done: acquisitions in the tooltip (all 79 players, no `Unknown`), Cup-team filters, Highlight mode, the acquisition-method filter, mid-season half-column bar ends, and player-name links to Hockey-Reference. The Cup filters were checked in headless Chrome (light and dark: toggle logic, 1996-97 + 2007-08 = 40 players, Show all). The others were checked by script and `node --check` only (filter match counts as listed under Filters; all 79 `hrId`s well-formed), because browser automation was blocked in the sessions that built them.
 
-Cup-team filters (settings modal) are done and were checked by headless Chrome in light and dark mode: modal toggle logic, row counts (1996-97 + 2007-08 = 40 players), and Show all.
-
-Highlight mode and the acquisition-method filter are implemented (JS syntax and match counts checked in Node: '01-02 + '07-08 Cups = 38 players; Trade = 26 (now 27, after the Gilchrist same-day fix); '07-08 + Free agent = 12) but **not yet checked in a browser**: browser automation was blocked in the sessions that built them. Check the highlight look in light and dark mode, the segmented switch, the two-section modal (including at phone width), and the status line wording.
-
-Mid-season half-column bar ends are implemented. The data was checked by script and the JS by `node --check`, but **not in a browser**: the headless Chrome screenshot was blocked again. Check the half bars (Gilchrist, Pushor, Murphy) in light and dark mode.
-
-Player-name links to Hockey-Reference are implemented (all 79 `hrId`s present and well-formed; `node --check` passes) but **not checked in a browser** (headless Chrome blocked again). Check that names are clickable, open a new tab, and still show the tooltip.
+**Pending browser check** (none of these has been seen in a browser yet):
+- Tooltip text, including acquisition lines.
+- Highlight look in light and dark mode, the Show only / Highlight switch, the two-section modal (also at phone width), and the status line wording.
+- Half-column bars (Gilchrist, Pushor, Murphy) in light and dark mode.
+- Name links: clickable, open a new tab, and still show the tooltip.
 
 **Open questions:** none.
 
-**Next steps:** wait for the user's next requirements.
+**Next steps:** do the pending browser check (or ask the user to), then wait for the user's next requirements.
 
 ## Future phases (not started)
 
 - Additional per-player data points (to be specified by the user).
-- How each player left Detroit (the same HR transactions hold it).
+- How each player left Detroit. `team_events()` already has the moves; only mid-season departures are stored (`left`), and none is shown in the tooltip.
 
 ## Agent notes
 
 - Hockey-Reference team pages (`/teams/DET/{endYear}.html`) download with plain `curl` and a browser User-Agent; keep it to about 1 request per 4s. Tables: `player_stats`, `goalie_stats`, plus `_post` for playoffs. Rows have `data-append-csv` (player id), `data-stat="name_display"`, and `data-stat="games"` / `"goalie_games"`. HR spells "Joe Kocur", while the NHL API has "Joey".
-
 - Headless Chrome screenshots: `--window-size` can't go below a 500px viewport. Use a fresh `--user-data-dir` in the scratchpad. For dark mode, add `--force-dark-mode --blink-settings=preferredColorScheme=0`. To test hover, drive a real mouse move through `--remote-debugging-port` (CDP `Input.dispatchMouseEvent`; Node 20 needs `--experimental-websocket`).
 - `python3 -m http.server` doesn't send cache headers, so browsers can keep old JS/CSS after edits. Tell the user to hard-refresh (Cmd+Shift+R) after changes.
