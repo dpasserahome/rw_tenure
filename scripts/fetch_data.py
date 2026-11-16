@@ -18,6 +18,9 @@ OUT_PATH = os.path.join(ROOT, "data", "players.json")
 CORE_START, CORE_END = 1996, 2007  # season start years, inclusive
 CUP_SEASONS = [1996, 1997, 2001, 2007]
 LOCKOUT_SEASONS = {2004}  # no games played; not a tenure gap
+# Work stoppages; non-NHL signings during them were loans, not moves away from Detroit
+LOCKOUTS = [(datetime.date(2004, 9, 16), datetime.date(2005, 7, 22)),
+            (datetime.date(2012, 9, 16), datetime.date(2013, 1, 12))]
 TEAM_NAME = "Detroit Red Wings"
 ROLE_BY_POSITION = {"C": "Forward", "L": "Forward", "R": "Forward", "D": "Defenseman", "G": "Goalie"}
 ROLE_ORDER = ["Forward", "Defenseman", "Goalie"]
@@ -181,9 +184,9 @@ def parse_transaction(body):
     return None  # suspensions, tryouts, loans: no change of NHL team
 
 
-def acquisitions(stints, inactive, landing, transactions):
-    """How Detroit acquired the player for each stint not preceded by an inactive gap."""
-    events = []  # (date, kind, dest, source, date label or draft details)
+def team_events(landing, transactions):
+    """Date-sorted moves between teams: (date, kind, dest, source, date label or draft details)."""
+    events = []
     dd = landing.get("draftDetails")
     if dd:
         draft_team = TEAM_NAME if dd["teamAbbrev"] == DET else dd["teamAbbrev"]
@@ -192,9 +195,40 @@ def acquisitions(stints, inactive, landing, transactions):
         parsed = parse_transaction(body)
         if parsed:
             date = datetime.datetime.strptime(date_text.strip(), "%B %d, %Y").date()
+            if parsed[1] and "(" in parsed[1] and any(a <= date <= b for a, b in LOCKOUTS):
+                continue  # e.g. "Pori (Finland)" during the 2004-05 lockout
             events.append((date, *parsed, date_text.strip()))
-    events.sort(key=lambda e: e[0])
+    # HR lists same-day moves in no reliable order; a same-day move to Detroit is the one that stuck
+    # (Gilchrist was claimed by Tampa Bay and traded back the same day)
+    events.sort(key=lambda e: (e[0], e[2] == TEAM_NAME))
+    return events
 
+
+def in_season(date, year):
+    """True if the date falls during the given season's games, from opening night to the end of the regular season."""
+    return datetime.date(year, 10, 1) <= date <= datetime.date(year + 1, 4, 15)
+
+
+def mid_season_moves(stints, acquisitions, events):
+    """Mark stints that began or ended during a season (Pushor, traded away before the 1998 playoffs).
+
+    Adds "joined" (ISO date) to a stint whose acquisition came mid-season, and "left" ({date, method, to})
+    to one whose player was moved out of Detroit mid-season. Retirements count as the end of the season.
+    """
+    for stint in stints:
+        for a in acquisitions:
+            if a["season"] == stint["start"] and "date" in a and in_season(datetime.date.fromisoformat(a["date"]), stint["start"]):
+                stint["joined"] = a["date"]
+        team = None
+        for date, kind, dest, _, _ in events:
+            if (team == TEAM_NAME and dest != TEAM_NAME and kind != "Left" and in_season(date, stint["end"])
+                    and not any(d >= date and d2 == TEAM_NAME for d, _, d2, _, _ in events if in_season(d, stint["end"]))):
+                stint["left"] = {"date": date.isoformat(), "method": kind, "to": dest}
+            team = dest
+
+
+def acquisitions(stints, inactive, events):
+    """How Detroit acquired the player for each stint not preceded by an inactive gap."""
     # Every move into Detroit from elsewhere
     entries, team = [], None
     for date, kind, dest, src, label in events:
@@ -256,16 +290,20 @@ def main():
         hr_id = ids_by_name.get(name_key(name))
         if not hr_id:
             raise SystemExit(f"No Hockey-Reference id for {name}; add an HR_NAME_ALIASES entry")
+        events = team_events(landing, hr_transactions(hr_id))
+        acquired = acquisitions(stints, inactive, events)
+        mid_season_moves(stints, acquired, events)
         players.append({
             "id": pid,
             "name": name,
+            "hrId": hr_id,
             "lastName": landing["lastName"]["default"],
             "role": ROLE_BY_POSITION[position],
             "position": position,
             "stints": stints,
             "inactive": inactive,
             "playoffSeasonsInWindow": sorted(seasons_in_window),
-            "acquisitions": acquisitions(stints, inactive, landing, hr_transactions(hr_id)),
+            "acquisitions": acquired,
         })
 
     players.sort(key=lambda p: (
@@ -295,6 +333,9 @@ def main():
     for p in players:
         if len(p["stints"]) > 1:
             print(f"Multi-stint: {p['name']} {p['stints']}")
+        for st in p["stints"]:
+            if "joined" in st or "left" in st:
+                print(f"Mid-season: {p['name']} {st}")
         if p["inactive"]:
             print(f"Inactive gaps: {p['name']} {p['inactive']}")
     for p in players:

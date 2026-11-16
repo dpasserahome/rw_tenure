@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-15",
+  "generated": "2026-11-16",
   "coreWindow": {
     "start": 1996,
     "end": 2007
@@ -14,6 +14,7 @@
     {
       "id": 8452578,
       "name": "Steve Yzerman",
+      "hrId": "yzermst01",
       "lastName": "Yzerman",
       "role": "Forward",
       "position": "C",
@@ -48,17 +49,24 @@
     {
       "id": 8448519,
       "name": "Joey Kocur",
+      "hrId": "kocurjo01",
       "lastName": "Kocur",
       "role": "Forward",
       "position": "R",
       "stints": [
         {
           "start": 1984,
-          "end": 1990
+          "end": 1990,
+          "left": {
+            "date": "1991-03-05",
+            "method": "Trade",
+            "to": "New York Rangers"
+          }
         },
         {
           "start": 1996,
-          "end": 1998
+          "end": 1998,
+          "joined": "1996-12-27"
         }
       ],
       "inactive": [],
@@ -84,6 +92,7 @@
     {
       "id": 8446788,
       "name": "Sergei Fedorov",
+      "hrId": "fedorse01",
       "lastName": "Fedorov",
       "role": "Forward",
       "position": "C",
@@ -116,6 +125,7 @@
     {
       "id": 8456887,
       "name": "Vyacheslav Kozlov",
+      "hrId": "kozlovy01",
       "lastName": "Kozlov",
       "role": "Forward",
       "position": "L",
@@ -146,6 +156,7 @@
     {
       "id": 8458524,
       "name": "Martin Lapointe",
+      "hrId": "lapoima01",
       "lastName": "Lapointe",
       "role": "Forward",
       "position": "R",
@@ -176,13 +187,19 @@
     {
       "id": 8456106,
       "name": "Dallas Drake",
+      "hrId": "drakeda01",
       "lastName": "Drake",
       "role": "Forward",
       "position": "R",
       "stints": [
         {
           "start": 1992,
-          "end": 1993
+          "end": 1993,
+          "left": {
+            "date": "1994-03-08",
+            "method": "Trade",
+            "to": "Winnipeg Jets"
+          }
         },
         {
           "start": 2007,
@@ -211,6 +228,7 @@
     {
       "id": 8458192,
       "name": "Tim Taylor",
+      "hrId": "tayloti01",
       "lastName": "Taylor",
       "role": "Forward",
       "position": "C",
@@ -235,6 +253,7 @@
     {
       "id": 8458982,
       "name": "Darren McCarty",
+      "hrId": "mccarda02",
       "lastName": "McCarty",
       "role": "Forward",
       "position": "R",
@@ -245,7 +264,8 @@
         },
         {
           "start": 2007,
-          "end": 2008
+          "end": 2008,
+          "joined": "2008-02-25"
         }
       ],
       "inactive": [],
@@ -278,6 +298,7 @@
     {
       "id": 8446485,
       "name": "Kris Draper",
+      "hrId": "drapekr01",
       "lastName": "Draper",
       "role": "Forward",
       "position": "C",
@@ -313,13 +334,15 @@
     {
       "id": 8445730,
       "name": "Doug Brown",
+      "hrId": "browndo01",
       "lastName": "Brown",
       "role": "Forward",
       "position": "R",
       "stints": [
         {
           "start": 1994,
-          "end": 2000
+          "end": 2000,
+          "joined": "1995-01-18"
         }
       ],
       "inactive": [],
@@ -348,13 +371,15 @@
     {
       "id": 8448669,
       "name": "Igor Larionov",
+      "hrId": "larioig01",
       "lastName": "Larionov",
       "role": "Forward",
       "position": "C",
       "stints": [
         {
           "start": 1995,
-          "end": 2002
+          "end": 2002,
+          "joined": "1995-10-24"
         }
       ],
       "inactive": [],
@@ -385,13 +410,15 @@
     {
       "id": 8459001,
       "name": "Kirk Maltby",
+      "hrId": "maltbki01",
       "lastName": "Maltby",
       "role": "Forward",
       "position": "L",
       "stints": [
         {
           "start": 1995,
-          "end": 2009
+          "end": 2009,
+          "joined": "1996-03-20"
         }
       ],
       "inactive": [],
@@ -420,13 +447,15 @@
     {
       "id": 8451122,
       "name": "Tomas Sandstrom",
+      "hrId": "sandsto01",
       "lastName": "Sandstrom",
       "role": "Forward",
       "position": "R",
       "stints": [
         {
           "start": 1996,
-          "end": 1996
+          "end": 1996,
+          "joined": "1997-01-27"
         }
       ],
       "inactive": [],
@@ -445,6 +474,7 @@
     {
       "id": 8458590,
       "name": "Mike Knuble",
+      "hrId": "knublmi01",
       "lastName": "Knuble",
       "role": "Forward",
       "position": "R",
@@ -471,13 +501,15 @@
     {
       "id": 8451302,
       "name": "Brendan Shanahan",
+      "hrId": "shanabr01",
       "lastName": "Shanahan",
       "role": "Forward",
       "position": "L",
       "stints": [
         {
           "start": 1996,
-          "end": 2005
+          "end": 2005,
+          "joined": "1996-10-09"
         }
       ],
       "inactive": [],
@@ -504,6 +536,7 @@
     {
       "id": 8460743,
       "name": "Tomas Holmstrom",
+      "hrId": "holmsto01",
       "lastName": "Holmstrom",
       "role": "Forward",
       "position": "L",
@@ -540,13 +573,19 @@
     {
       "id": 8447177,
       "name": "Brent Gilchrist",
+      "hrId": "gilchbr01",
       "lastName": "Gilchrist",
       "role": "Forward",
       "position": "L",
       "stints": [
         {
           "start": 1997,
-          "end": 2001
+          "end": 2001,
+          "left": {
+            "date": "2002-02-13",
+            "method": "Waivers",
+            "to": "Dallas Stars"
+          }
         }
       ],
       "inactive": [],
@@ -561,19 +600,27 @@
           "season": 1997,
           "method": "Free agent",
           "date": "1997-08-01"
+        },
+        {
+          "season": 1998,
+          "method": "Trade",
+          "date": "1998-10-05",
+          "from": "Tampa Bay Lightning"
         }
       ]
     },
     {
       "id": 8446085,
       "name": "Wendel Clark",
+      "hrId": "clarkwe01",
       "lastName": "Clark",
       "role": "Forward",
       "position": "L",
       "stints": [
         {
           "start": 1998,
-          "end": 1998
+          "end": 1998,
+          "joined": "1999-03-23"
         }
       ],
       "inactive": [],
@@ -592,6 +639,7 @@
     {
       "id": 8460061,
       "name": "Stacy Roest",
+      "hrId": "roestst01",
       "lastName": "Roest",
       "role": "Forward",
       "position": "C",
@@ -602,7 +650,12 @@
         },
         {
           "start": 2002,
-          "end": 2002
+          "end": 2002,
+          "left": {
+            "date": "2003-03-14",
+            "method": "Free agent",
+            "to": "Rapperswil-Jona (Swiss)"
+          }
         }
       ],
       "inactive": [],
@@ -625,13 +678,15 @@
     {
       "id": 8452216,
       "name": "Pat Verbeek",
+      "hrId": "verbepa01",
       "lastName": "Verbeek",
       "role": "Forward",
       "position": "R",
       "stints": [
         {
           "start": 1999,
-          "end": 2000
+          "end": 2000,
+          "joined": "1999-11-11"
         }
       ],
       "inactive": [],
@@ -650,6 +705,7 @@
     {
       "id": 8464960,
       "name": "Boyd Devereaux",
+      "hrId": "deverbo01",
       "lastName": "Devereaux",
       "role": "Forward",
       "position": "C",
@@ -676,13 +732,19 @@
     {
       "id": 8468789,
       "name": "Jason Williams",
+      "hrId": "willija01",
       "lastName": "Williams",
       "role": "Forward",
       "position": "C",
       "stints": [
         {
           "start": 2000,
-          "end": 2006
+          "end": 2006,
+          "left": {
+            "date": "2007-02-26",
+            "method": "Trade",
+            "to": "Chicago Blackhawks"
+          }
         },
         {
           "start": 2009,
@@ -712,6 +774,7 @@
     {
       "id": 8450941,
       "name": "Luc Robitaille",
+      "hrId": "robitlu01",
       "lastName": "Robitaille",
       "role": "Forward",
       "position": "L",
@@ -737,6 +800,7 @@
     {
       "id": 8448091,
       "name": "Brett Hull",
+      "hrId": "hullbr01",
       "lastName": "Hull",
       "role": "Forward",
       "position": "R",
@@ -763,6 +827,7 @@
     {
       "id": 8467514,
       "name": "Pavel Datsyuk",
+      "hrId": "datsypa01",
       "lastName": "Datsyuk",
       "role": "Forward",
       "position": "C",
@@ -794,6 +859,7 @@
     {
       "id": 8468083,
       "name": "Henrik Zetterberg",
+      "hrId": "zettehe01",
       "lastName": "Zetterberg",
       "role": "Forward",
       "position": "C",
@@ -824,13 +890,15 @@
     {
       "id": 8451898,
       "name": "Steve Thomas",
+      "hrId": "thomast01",
       "lastName": "Thomas",
       "role": "Forward",
       "position": "R",
       "stints": [
         {
           "start": 2003,
-          "end": 2003
+          "end": 2003,
+          "joined": "2003-11-05"
         }
       ],
       "inactive": [],
@@ -848,6 +916,7 @@
     {
       "id": 8458537,
       "name": "Ray Whitney",
+      "hrId": "whitnra01",
       "lastName": "Whitney",
       "role": "Forward",
       "position": "L",
@@ -872,6 +941,7 @@
     {
       "id": 8467323,
       "name": "Mark Mowers",
+      "hrId": "mowerma01",
       "lastName": "Mowers",
       "role": "Forward",
       "position": "R",
@@ -896,13 +966,15 @@
     {
       "id": 8456966,
       "name": "Robert Lang",
+      "hrId": "langro01",
       "lastName": "Lang",
       "role": "Forward",
       "position": "C",
       "stints": [
         {
           "start": 2003,
-          "end": 2006
+          "end": 2006,
+          "joined": "2004-02-27"
         }
       ],
       "inactive": [],
@@ -923,6 +995,7 @@
     {
       "id": 8470201,
       "name": "Jiri Hudler",
+      "hrId": "hudleji01",
       "lastName": "Hudler",
       "role": "Forward",
       "position": "R",
@@ -959,6 +1032,7 @@
     {
       "id": 8468518,
       "name": "Tomas Kopecky",
+      "hrId": "kopecto01",
       "lastName": "Kopecky",
       "role": "Forward",
       "position": "R",
@@ -985,6 +1059,7 @@
     {
       "id": 8467463,
       "name": "Mikael Samuelsson",
+      "hrId": "samuemi01",
       "lastName": "Samuelsson",
       "role": "Forward",
       "position": "R",
@@ -1020,13 +1095,15 @@
     {
       "id": 8466149,
       "name": "Daniel Cleary",
+      "hrId": "clearda01",
       "lastName": "Cleary",
       "role": "Forward",
       "position": "R",
       "stints": [
         {
           "start": 2005,
-          "end": 2014
+          "end": 2014,
+          "joined": "2005-10-04"
         }
       ],
       "inactive": [],
@@ -1046,6 +1123,7 @@
     {
       "id": 8471309,
       "name": "Johan Franzen",
+      "hrId": "franzjo01",
       "lastName": "Franzen",
       "role": "Forward",
       "position": "R",
@@ -1074,6 +1152,7 @@
     {
       "id": 8470047,
       "name": "Valtteri Filppula",
+      "hrId": "filppva01",
       "lastName": "Filppula",
       "role": "Forward",
       "position": "C",
@@ -1110,13 +1189,15 @@
     {
       "id": 8466260,
       "name": "Kyle Calder",
+      "hrId": "caldeky01",
       "lastName": "Calder",
       "role": "Forward",
       "position": "L",
       "stints": [
         {
           "start": 2006,
-          "end": 2006
+          "end": 2006,
+          "joined": "2007-02-26"
         }
       ],
       "inactive": [],
@@ -1135,13 +1216,15 @@
     {
       "id": 8459444,
       "name": "Todd Bertuzzi",
+      "hrId": "bertuto01",
       "lastName": "Bertuzzi",
       "role": "Forward",
       "position": "R",
       "stints": [
         {
           "start": 2006,
-          "end": 2006
+          "end": 2006,
+          "joined": "2007-02-27"
         },
         {
           "start": 2009,
@@ -1169,6 +1252,7 @@
     {
       "id": 8469997,
       "name": "Mark Hartigan",
+      "hrId": "hartima01",
       "lastName": "Hartigan",
       "role": "Forward",
       "position": "C",
@@ -1193,6 +1277,7 @@
     {
       "id": 8471794,
       "name": "Darren Helm",
+      "hrId": "helmda01",
       "lastName": "Helm",
       "role": "Forward",
       "position": "C",
@@ -1219,6 +1304,7 @@
     {
       "id": 8456870,
       "name": "Vladimir Konstantinov",
+      "hrId": "konstvl01",
       "lastName": "Konstantinov",
       "role": "Defenseman",
       "position": "D",
@@ -1245,6 +1331,7 @@
     {
       "id": 8457063,
       "name": "Nicklas Lidstrom",
+      "hrId": "lidstni01",
       "lastName": "Lidstrom",
       "role": "Defenseman",
       "position": "D",
@@ -1281,6 +1368,7 @@
     {
       "id": 8458519,
       "name": "Aaron Ward",
+      "hrId": "wardaa01",
       "lastName": "Ward",
       "role": "Defenseman",
       "position": "D",
@@ -1312,13 +1400,15 @@
     {
       "id": 8446789,
       "name": "Viacheslav Fetisov",
+      "hrId": "fetisvi01",
       "lastName": "Fetisov",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1994,
-          "end": 1997
+          "end": 1997,
+          "joined": "1995-04-03"
         }
       ],
       "inactive": [],
@@ -1338,6 +1428,7 @@
     {
       "id": 8451022,
       "name": "Bob Rouse",
+      "hrId": "rousebo01",
       "lastName": "Rouse",
       "role": "Defenseman",
       "position": "D",
@@ -1363,13 +1454,19 @@
     {
       "id": 8458546,
       "name": "Jamie Pushor",
+      "hrId": "pushoja01",
       "lastName": "Pushor",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1995,
-          "end": 1997
+          "end": 1997,
+          "left": {
+            "date": "1998-03-24",
+            "method": "Trade",
+            "to": "Mighty Ducks of Anaheim"
+          }
         }
       ],
       "inactive": [],
@@ -1389,13 +1486,19 @@
     {
       "id": 8459443,
       "name": "Anders Eriksson",
+      "hrId": "eriksan01",
       "lastName": "Eriksson",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1995,
-          "end": 1998
+          "end": 1998,
+          "left": {
+            "date": "1999-03-23",
+            "method": "Trade",
+            "to": "Chicago Blackhawks"
+          }
         }
       ],
       "inactive": [],
@@ -1415,6 +1518,7 @@
     {
       "id": 8460540,
       "name": "Mathieu Dandenault",
+      "hrId": "dandema01",
       "lastName": "Dandenault",
       "role": "Defenseman",
       "position": "D",
@@ -1447,13 +1551,15 @@
     {
       "id": 8449745,
       "name": "Larry Murphy",
+      "hrId": "murphla01",
       "lastName": "Murphy",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1996,
-          "end": 2000
+          "end": 2000,
+          "joined": "1997-03-18"
         }
       ],
       "inactive": [],
@@ -1476,13 +1582,15 @@
     {
       "id": 8458672,
       "name": "Dmitri Mironov",
+      "hrId": "mirondm01",
       "lastName": "Mironov",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1997,
-          "end": 1997
+          "end": 1997,
+          "joined": "1998-03-24"
         }
       ],
       "inactive": [],
@@ -1501,13 +1609,15 @@
     {
       "id": 8449009,
       "name": "Jamie Macoun",
+      "hrId": "macouja01",
       "lastName": "Macoun",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1997,
-          "end": 1998
+          "end": 1998,
+          "joined": "1998-03-24"
         }
       ],
       "inactive": [],
@@ -1527,13 +1637,15 @@
     {
       "id": 8451107,
       "name": "Ulf Samuelsson",
+      "hrId": "samueul01",
       "lastName": "Samuelsson",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1998,
-          "end": 1998
+          "end": 1998,
+          "joined": "1999-03-23"
         }
       ],
       "inactive": [],
@@ -1552,13 +1664,15 @@
     {
       "id": 8447187,
       "name": "Todd Gill",
+      "hrId": "gillto01",
       "lastName": "Gill",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1998,
-          "end": 2000
+          "end": 2000,
+          "joined": "1998-12-30"
         }
       ],
       "inactive": [],
@@ -1585,6 +1699,7 @@
     {
       "id": 8448554,
       "name": "Uwe Krupp",
+      "hrId": "kruppuw01",
       "lastName": "Krupp",
       "role": "Defenseman",
       "position": "D",
@@ -1618,13 +1733,15 @@
     {
       "id": 8446053,
       "name": "Chris Chelios",
+      "hrId": "chelich01",
       "lastName": "Chelios",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 1998,
-          "end": 2008
+          "end": 2008,
+          "joined": "1999-03-23"
         }
       ],
       "inactive": [],
@@ -1651,6 +1768,7 @@
     {
       "id": 8446494,
       "name": "Steve Duchesne",
+      "hrId": "duchest01",
       "lastName": "Duchesne",
       "role": "Defenseman",
       "position": "D",
@@ -1677,6 +1795,7 @@
     {
       "id": 8467349,
       "name": "Jiri Fischer",
+      "hrId": "fischji01",
       "lastName": "Fischer",
       "role": "Defenseman",
       "position": "D",
@@ -1705,6 +1824,7 @@
     {
       "id": 8449971,
       "name": "Fredrik Olausson",
+      "hrId": "olausfr01",
       "lastName": "Olausson",
       "role": "Defenseman",
       "position": "D",
@@ -1729,13 +1849,15 @@
     {
       "id": 8458052,
       "name": "Jiri Slegr",
+      "hrId": "slegrji01",
       "lastName": "Slegr",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 2001,
-          "end": 2001
+          "end": 2001,
+          "joined": "2002-03-19"
         }
       ],
       "inactive": [],
@@ -1754,6 +1876,7 @@
     {
       "id": 8469701,
       "name": "Dmitri Bykov",
+      "hrId": "bykovdm01",
       "lastName": "Bykov",
       "role": "Defenseman",
       "position": "D",
@@ -1780,13 +1903,15 @@
     {
       "id": 8458454,
       "name": "Jason Woolley",
+      "hrId": "woollja01",
       "lastName": "Woolley",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 2002,
-          "end": 2005
+          "end": 2005,
+          "joined": "2002-11-16"
         }
       ],
       "inactive": [],
@@ -1806,13 +1931,15 @@
     {
       "id": 8451224,
       "name": "Mathieu Schneider",
+      "hrId": "schnema01",
       "lastName": "Schneider",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 2002,
-          "end": 2006
+          "end": 2006,
+          "joined": "2003-03-11"
         }
       ],
       "inactive": [],
@@ -1834,6 +1961,7 @@
     {
       "id": 8456531,
       "name": "Derian Hatcher",
+      "hrId": "hatchde01",
       "lastName": "Hatcher",
       "role": "Defenseman",
       "position": "D",
@@ -1858,13 +1986,19 @@
     {
       "id": 8459484,
       "name": "Jamie Rivers",
+      "hrId": "riverja01",
       "lastName": "Rivers",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 2003,
-          "end": 2005
+          "end": 2005,
+          "left": {
+            "date": "2006-03-09",
+            "method": "Trade",
+            "to": "Phoenix Coyotes"
+          }
         }
       ],
       "inactive": [],
@@ -1882,6 +2016,7 @@
     {
       "id": 8468509,
       "name": "Niklas Kronwall",
+      "hrId": "kronwni01",
       "lastName": "Kronwall",
       "role": "Defenseman",
       "position": "D",
@@ -1909,6 +2044,7 @@
     {
       "id": 8471187,
       "name": "Brett Lebda",
+      "hrId": "lebdabr01",
       "lastName": "Lebda",
       "role": "Defenseman",
       "position": "D",
@@ -1935,6 +2071,7 @@
     {
       "id": 8468534,
       "name": "Andreas Lilja",
+      "hrId": "liljaan01",
       "lastName": "Lilja",
       "role": "Defenseman",
       "position": "D",
@@ -1961,6 +2098,7 @@
     {
       "id": 8470724,
       "name": "Kyle Quincey",
+      "hrId": "quincky01",
       "lastName": "Quincey",
       "role": "Defenseman",
       "position": "D",
@@ -1971,7 +2109,8 @@
         },
         {
           "start": 2011,
-          "end": 2015
+          "end": 2015,
+          "joined": "2012-02-21"
         }
       ],
       "inactive": [],
@@ -1997,6 +2136,7 @@
     {
       "id": 8462258,
       "name": "Danny Markov",
+      "hrId": "markoda01",
       "lastName": "Markov",
       "role": "Defenseman",
       "position": "D",
@@ -2021,6 +2161,7 @@
     {
       "id": 8467856,
       "name": "Brian Rafalski",
+      "hrId": "rafalbr01",
       "lastName": "Rafalski",
       "role": "Defenseman",
       "position": "D",
@@ -2045,13 +2186,15 @@
     {
       "id": 8467331,
       "name": "Brad Stuart",
+      "hrId": "stuarbr02",
       "lastName": "Stuart",
       "role": "Defenseman",
       "position": "D",
       "stints": [
         {
           "start": 2007,
-          "end": 2011
+          "end": 2011,
+          "joined": "2008-02-26"
         }
       ],
       "inactive": [],
@@ -2070,6 +2213,7 @@
     {
       "id": 8458568,
       "name": "Chris Osgood",
+      "hrId": "osgooch01",
       "lastName": "Osgood",
       "role": "Goalie",
       "position": "G",
@@ -2110,6 +2254,7 @@
     {
       "id": 8452217,
       "name": "Mike Vernon",
+      "hrId": "vernomi01",
       "lastName": "Vernon",
       "role": "Goalie",
       "position": "G",
@@ -2135,13 +2280,19 @@
     {
       "id": 8459357,
       "name": "Kevin Hodson",
+      "hrId": "hodsoke01",
       "lastName": "Hodson",
       "role": "Goalie",
       "position": "G",
       "stints": [
         {
           "start": 1995,
-          "end": 1998
+          "end": 1998,
+          "left": {
+            "date": "1999-03-23",
+            "method": "Trade",
+            "to": "Tampa Bay Lightning"
+          }
         }
       ],
       "inactive": [],
@@ -2159,6 +2310,7 @@
     {
       "id": 8459549,
       "name": "Norm Maracle",
+      "hrId": "maracno01",
       "lastName": "Maracle",
       "role": "Goalie",
       "position": "G",
@@ -2185,13 +2337,15 @@
     {
       "id": 8450651,
       "name": "Bill Ranford",
+      "hrId": "ranfobi01",
       "lastName": "Ranford",
       "role": "Goalie",
       "position": "G",
       "stints": [
         {
           "start": 1998,
-          "end": 1998
+          "end": 1998,
+          "joined": "1999-03-23"
         }
       ],
       "inactive": [],
@@ -2210,13 +2364,15 @@
     {
       "id": 8459308,
       "name": "Manny Legace",
+      "hrId": "legacma01",
       "lastName": "Legace",
       "role": "Goalie",
       "position": "G",
       "stints": [
         {
           "start": 1999,
-          "end": 2005
+          "end": 2005,
+          "joined": "1999-10-13"
         }
       ],
       "inactive": [],
@@ -2237,6 +2393,7 @@
     {
       "id": 8447687,
       "name": "Dominik Hasek",
+      "hrId": "hasekdo01",
       "lastName": "Hasek",
       "role": "Goalie",
       "position": "G",
@@ -2282,6 +2439,7 @@
     {
       "id": 8448382,
       "name": "Curtis Joseph",
+      "hrId": "josepcu01",
       "lastName": "Joseph",
       "role": "Goalie",
       "position": "G",

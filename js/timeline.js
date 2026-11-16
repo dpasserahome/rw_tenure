@@ -16,6 +16,10 @@
   const LABEL_W = 170;
   const RIGHT_PAD = 32;
 
+  // A stint that began or ended mid-season fills half of that season's column, whatever the date
+  const barStart = (s) => s.start + (s.joined ? 0.5 : 0);
+  const barEnd = (s) => s.end + (s.left ? 0.5 : 1);
+
   const seasonLabel = (y) => `${y}-${String((y + 1) % 100).padStart(2, "0")}`;
   const shortSeason = (y) => `'${String(y % 100).padStart(2, "0")}-${String((y + 1) % 100).padStart(2, "0")}`;
 
@@ -143,9 +147,6 @@
     const row = svg.selectAll(".row").data(rows.filter((r) => r.type === "player")).join("g")
       .attr("class", "row").classed("is-highlighted", (r) => isHighlighted(r.player))
       .attr("transform", (r) => `translate(0,${r.y})`);
-    row.append("text").attr("class", "row-label")
-      .attr("x", LABEL_W - 10).attr("y", ROW_H / 2).attr("dy", "0.35em").attr("text-anchor", "end")
-      .text((r) => r.player.name);
     // Inactive gaps (no games anywhere) join the adjacent stints; extend under them so the bar reads as continuous
     row.selectAll(".bar-inactive").data((r) => (r.player.inactive || []).map((g) => ({ ...g, color: r.role.color }))).join("rect")
       .attr("class", "bar-inactive")
@@ -154,7 +155,7 @@
       .attr("fill", (g) => g.color).attr("fill-opacity", INACTIVE_OPACITY);
     row.selectAll(".bar").data((r) => r.player.stints.map((s) => ({ ...s, color: r.role.color }))).join("rect")
       .attr("class", "bar")
-      .attr("x", (s) => x(s.start) + 1).attr("width", (s) => Math.max(x(s.end + 1) - x(s.start) - 2, 2))
+      .attr("x", (s) => x(barStart(s)) + 1).attr("width", (s) => Math.max(x(barEnd(s)) - x(barStart(s)) - 2, 2))
       .attr("y", (ROW_H - BAR_H) / 2).attr("height", BAR_H).attr("rx", 3)
       .attr("fill", (s) => s.color);
     // Full-row hit target
@@ -162,6 +163,15 @@
       .attr("fill", "transparent")
       .on("mousemove", (event, r) => showTooltip(event, r.player, cupSeasons))
       .on("mouseleave", hideTooltip);
+    // Name links to the player's Hockey-Reference page; drawn above the hit target so it stays clickable
+    row.append("a").attr("class", "row-link")
+      .attr("href", (r) => `https://www.hockey-reference.com/players/${r.player.hrId[0]}/${r.player.hrId}.html`)
+      .attr("target", "_blank").attr("rel", "noopener")
+      .on("mousemove", (event, r) => showTooltip(event, r.player, cupSeasons))
+      .on("mouseleave", hideTooltip)
+      .append("text").attr("class", "row-label")
+      .attr("x", LABEL_W - 10).attr("y", ROW_H / 2).attr("dy", "0.35em").attr("text-anchor", "end")
+      .text((r) => r.player.name);
 
     // Highlight the season column under the pointer, in both the header and the body
     for (const target of [axisSvg, svg]) {
@@ -200,6 +210,8 @@
     }
   }
 
+  const formatDate = (iso) => iso.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$2/$3/$1"); // "1998-12-30" -> "12/30/1998"
+
   const ordinal = (n) => {
     if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
     return n + ({ 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th");
@@ -207,7 +219,7 @@
 
   function describeAcquisition(a) {
     const from = a.from ? ` from ${a.from}` : "";
-    const date = a.date && a.date.replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$2/$3/$1"); // "1998-12-30" -> "12/30/1998"
+    const date = a.date && formatDate(a.date);
     switch (a.method) {
       case "Draft": return `Drafted ${a.year}, ${ordinal(a.round)} round (${ordinal(a.overall)} OA)`;
       case "Trade": return `Trade${from}, ${date}`;

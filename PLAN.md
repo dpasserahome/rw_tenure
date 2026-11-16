@@ -19,7 +19,7 @@ This file is the single source of truth for requirements, design, and status. **
 4. **Tenure season:** any season with ≥1 Detroit game (regular season or playoff).
 5. **Gaps:** non-consecutive stints are separate bar segments on the same row. The 2004-05 lockout (no games played) is **not** a gap. A gap in which the player played **no games for any team** (injury, retirement; e.g. Krupp, Hasek) is not a break either: the bar continues through it in a dimmer shade of the role color.
 6. **Extent:** computed from data. Currently Steve Yzerman (1983-84) through Darren Helm and Valtteri Filppula (2020-21).
-7. **Precision:** season-level.
+7. **Precision:** season-level, except that a stint that began or ended mid-season fills only half of that season's column, whatever the date (e.g. Gilchrist, waived to Dallas in Feb 2002, stops halfway through the 2001-02 Cup column). The tooltip's acquisition dates give specifics for arrivals; departure dates aren't shown.
 8. **Roles (bar color):** Forward (`C`, `L`, `R`), Defenseman (`D`), Goalie (`G`). No secondary stripes. Per-player position overrides live in `POSITION_OVERRIDES` in `fetch_data.py` (never hand-edit the JSON).
 9. **On-page note (required):** only players with ≥1 Detroit playoff game from 1996-97 through 2007-08 are shown.
 10. **Layout:** vertical scrolling is fine; don't force-fit the viewport.
@@ -66,11 +66,19 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 - Inactive gap: every season between two Detroit stints has zero games in all `seasonTotals` rows (any team, league, or game type).
 - Hockey-Reference ids are matched by normalized name (accents stripped, lowercase); `HR_NAME_ALIASES` covers spelling differences (Joey/Joe Kocur). The script stops if a player has no match.
 
-### Acquisitions (`acquisitions()` in `fetch_data.py`)
+### Acquisitions (`team_events()` and `acquisitions()` in `fetch_data.py`)
 
 - Events: the NHL draft (dated June 30 of the draft year) plus parsed HR transactions: trade, free-agent signing (any club, incl. non-NHL), waiver claim ("Claimed by…" / "Selected off waivers…"), expansion draft, retired/released (team = none). Trades of a draft pick before it was used ("as 2nd round draft pick in…") are ignored, so a Detroit draft pick reads as Drafted. Suspensions, tryouts, and loans don't change the team. Unlinked HR team codes are mapped in `HR_UNLINKED_TEAMS` (ANA, QBN).
 - An acquisition is any event that moves the player to Detroit from another team (or none). Each stint shows the latest acquisition before its first season ended (June 30) plus any later acquisitions within it (e.g. Gill left and came back mid-stint).
+- Event order: same-day moves are ordered so a move to Detroit comes last, because HR's same-day order is unreliable (Gilchrist was claimed by Tampa Bay in the 1998 waiver draft and traded back the same day, so it shows as a 1998-99 trade acquisition; Quincey and Calder came through a third team the same day). Non-NHL signings (team names with "(", e.g. "Pori (Finland)") during the 2004-05 and 2012-13 lockouts (`LOCKOUTS`) are loans and are ignored.
 - A stint with no new acquisition shows nothing if the player never left Detroit (minor-league spell, e.g. Ward; or a no-games gap, e.g. Hasek, Krupp); otherwise it shows `Unknown` (none currently).
+
+### Mid-season moves (`mid_season_moves()` in `fetch_data.py`)
+
+- "In season" means Oct 1 through Apr 15 (opening night to the end of the regular season). Moves after Apr 15 count as offseason: no mid-season departures happen in the playoffs, and later trades of rights or retirements (Stuart June 2012, Lidstrom May 2012) belong to the end of the season.
+- `joined`: the stint's first season has an acquisition (with a date) dated in season. Currently 28 (e.g. Murphy Mar 1997, Stuart Feb 2008, Shanahan Oct 9 1996).
+- `left`: a move out of Detroit dated in the stint's last season, with no move back to Detroit later that season. Retirements ("Left") never count. Currently 9: Kocur 1990-91, Drake 1993-94, Pushor 1997-98 (Cup), Eriksson and Hodson 1998-99, Gilchrist 2001-02 (Cup), Roest 2002-03, Rivers 2005-06, J. Williams 2006-07.
+- Moves inside a stint (Gill left in summer 1999 and came back in March 2000) aren't drawn.
 
 ## `data/players.json` schema
 
@@ -80,9 +88,9 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
   "coreWindow": { "start": 1996, "end": 2007 },
   "cupSeasons": [1996, 1997, 2001, 2007],
   "players": [
-    { "id": 8446120, "name": "Steve Yzerman", "lastName": "Yzerman",
+    { "id": 8446120, "name": "Steve Yzerman", "hrId": "yzermst01", "lastName": "Yzerman",
       "role": "Forward", "position": "C",
-      "stints": [{ "start": 1983, "end": 2005 }],
+      "stints": [{ "start": 1983, "end": 2005 }],  // optional "joined", "left", see below
       "inactive": [],
       "playoffSeasonsInWindow": [1996, 1997],
       "acquisitions": [{ "season": 1983, "method": "Draft", "year": 1983, "round": 1, "overall": 4 }] }
@@ -90,18 +98,20 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 }
 ```
 
+- `hrId`: Hockey-Reference player id (from the team-page name match), used for the name link.
 - Seasons are identified by start year (1996 = 1996-97).
-- Stints are inclusive; a bar spans from `start` to `end + 1` on the axis. Stints contain only seasons with Detroit games.
+- Stints are inclusive; a bar spans from `start` to `end + 1` on the axis. Stints contain only seasons with Detroit games. Optional `joined` (ISO date) and `left` (`{date, method, to}`, method `Trade`, `Waivers`, or `Free agent` for a non-NHL club) mark mid-season moves.
 - `inactive`: inclusive gaps between stints in which the player played nowhere (e.g. Krupp `[{start: 1999, end: 2000}]`). Always present; usually empty.
-- `acquisitions`: in date order. `method` is `Draft` (`year`, `round`, `overall`), `Trade`, `Free agent`, `Waivers` (these three have an ISO `date`, e.g. "1996-10-09", and optional `from` team name), or `Unknown`. `season` is the season it applied to (never before the stint start). Currently 36 free agent, 27 draft, 27 trade, 3 waivers.
+- `acquisitions`: in date order. `method` is `Draft` (`year`, `round`, `overall`), `Trade`, `Free agent`, `Waivers` (these three have an ISO `date`, e.g. "1996-10-09", and optional `from` team name), or `Unknown`. `season` is the season it applied to (never before the stint start). Currently 37 free agent, 28 trade, 27 draft, 3 waivers.
 - Players are pre-sorted by role (Forward → Defenseman → Goalie), then first season, last season, and last name. The page renders in file order.
 - Future per-player fields get added to player objects. Don't restructure.
 
 ## Rendering (`js/timeline.js`)
 
-- **Rows:** one per player, under role group headers with counts. Fixed 22px rows with alternating backgrounds (a translucent `--row-alt` overlay drawn above the column fills, so stripes show inside them). Names on the left (170px column).
+- **Rows:** one per player, under role group headers with counts. Fixed 22px rows with alternating backgrounds (a translucent `--row-alt` overlay drawn above the column fills, so stripes show inside them). Names on the left (170px column). Each name links to the player's Hockey-Reference page (`/players/{first letter}/{hrId}.html`) in a new tab, underlined on hover; the link sits above the row's hit target and also shows the tooltip.
 - **X-axis:** linear scale over season start years. The width follows the container, with a minimum of 640px. Every season is labeled (`1996-97` format), rotated 55° counter-clockwise with the label's start anchored at the top center of its column. If the columns are too narrow for the labels not to overlap (below ~12px per season), every other season is labeled, choosing odd or even start years by whichever labels more Cup seasons (currently odd: 1997-98, 2001-02, 2007-08). Below 700px viewport width, the chart scrolls horizontally.
 - **Sticky axis header** at the top, holding only the rotated season labels. There are no separate Cup or Lockout subheaders. Cup season labels are bold dark gold (`--cup-text`), and the 2004-05 label is muted italic.
+- **Mid-season bar ends:** a stint with `joined` starts, and one with `left` ends, at the middle of that season's column, regardless of the date (so early-October arrivals like Shanahan, Cleary and Legace also start halfway). There is no legend entry.
 - **Inactive gaps:** drawn under the adjacent stints at 35% opacity of the role color, extended 4px each side so the bar reads as continuous.
 - **Column fills** (header and body): the core window is shaded light blue. Cup seasons have an opaque light gold fill (`--cup-fill`) with thin gold edge lines (`--cup-edge`), replacing the blue shading in those columns. The 2004-05 lockout column has a dark grey fill (`--lockout-fill`).
 - **Colors:** validated categorical palette, defined as CSS tokens with light and dark variants. Forward is blue (`#2a78d6` / `#3987e5`), Defenseman orange (`#eb6834` / `#d95926`), Goalie aqua (`#1baf7a` / `#199e70`). The legend covers roles, inactive gaps ("Still with Detroit, no games played"), the core window, Cup seasons, and the lockout.
@@ -113,7 +123,7 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 
 - State: `FILTER_GROUPS` (Cup teams, Acquired by), each with a `selected` set and a `matches(player, value)` test, plus `filterMode`, `"show"` (default) or `"highlight"`. An empty set means that group doesn't filter. One selection is shared by both modes; switching modes keeps it.
 - **Cup team:** that season is in `playoffSeasonsInWindow`. Counts: '96-97 = 23, '97-98 = 24, '01-02 = 23, '07-08 = 23; 22 players are on no Cup team.
-- **Acquisition method:** any entry in `acquisitions` has that method, from any Detroit stint (so a Cup + method match doesn't require the acquisition to be for the Cup-season stint). Counts: Draft 27, Trade 26, Free agent 34, Waivers 3 (players with several stints can count under several methods).
+- **Acquisition method:** any entry in `acquisitions` has that method, from any Detroit stint (so a Cup + method match doesn't require the acquisition to be for the Cup-season stint). Counts: Draft 27, Trade 27, Free agent 34, Waivers 3 (players with several stints can count under several methods).
 - Values within a group combine with OR; groups combine with AND (e.g. '07-08 Cup + Free agent = 12 players).
 - **Show only:** only matching players are drawn.
 - **Highlight:** every player is drawn. Matching rows get a translucent gold band across the full row (`--row-highlight`, so column fills still show through), a 3px `--cup-edge` strip at the left edge, and a bold name. Group header counts stay at the full totals. Each group's "all" option reads "No highlight" in this mode.
@@ -136,6 +146,7 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 - **Multiple Cup filters combine with OR.** The user asked for players who won any selected Cup.
 - **Highlight is a mode of the Cup filter, not a separate selection.** The user chose one shared selection with a Show only / Highlight switch over independent show and highlight controls (simpler modal). Every match gets the same highlight regardless of how many checked values the player matches.
 - **Acquisition filter: OR within the group, AND with the Cup group, matching any stint's acquisition.** Standard faceted-filter behavior; per-stint matching against the Cup season wasn't requested. Gold matches the Cup columns; red accent would compete with the role colors.
+- **Mid-season moves are drawn as a half-filled column, not placed by date.** The user tried date-proportional ends and chose a fixed half: it reads more clearly, and hovering gives specifics. It applies to arrivals and departures in every season, not just Cup seasons. No legend swatch and no departure line in the tooltip (user's call). Players who left before a Cup run already don't count as Cup team members.
 - **Cup and lockout marking:** shown with column fills plus styled season labels and legend entries, not separate header text. This keeps the header to one row of labels.
 
 ## Status
@@ -153,7 +164,11 @@ Acquisitions in the tooltip are done (data for all 79 players, no `Unknown`). Th
 
 Cup-team filters (settings modal) are done and were checked by headless Chrome in light and dark mode: modal toggle logic, row counts (1996-97 + 2007-08 = 40 players), and Show all.
 
-Highlight mode and the acquisition-method filter are implemented (JS syntax and match counts checked in Node: '01-02 + '07-08 Cups = 38 players; Trade = 26; '07-08 + Free agent = 12) but **not yet checked in a browser**: browser automation was blocked in the sessions that built them. Check the highlight look in light and dark mode, the segmented switch, the two-section modal (including at phone width), and the status line wording.
+Highlight mode and the acquisition-method filter are implemented (JS syntax and match counts checked in Node: '01-02 + '07-08 Cups = 38 players; Trade = 26 (now 27, after the Gilchrist same-day fix); '07-08 + Free agent = 12) but **not yet checked in a browser**: browser automation was blocked in the sessions that built them. Check the highlight look in light and dark mode, the segmented switch, the two-section modal (including at phone width), and the status line wording.
+
+Mid-season half-column bar ends are implemented. The data was checked by script and the JS by `node --check`, but **not in a browser**: the headless Chrome screenshot was blocked again. Check the half bars (Gilchrist, Pushor, Murphy) in light and dark mode.
+
+Player-name links to Hockey-Reference are implemented (all 79 `hrId`s present and well-formed; `node --check` passes) but **not checked in a browser** (headless Chrome blocked again). Check that names are clickable, open a new tab, and still show the tooltip.
 
 **Open questions:** none.
 

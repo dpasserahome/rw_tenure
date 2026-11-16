@@ -148,6 +148,7 @@ h1 { margin: 0; font-size: 24px; }
 .row-label { fill: var(--text-primary); font-size: 12px; }
 .group-label { fill: var(--text-muted); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
 .row:hover .row-label, .row.is-highlighted .row-label { font-weight: 600; }
+.row-link:hover .row-label, .row-link:focus-visible .row-label { text-decoration: underline; }
 .row-highlight { fill: var(--row-highlight); }
 .row-highlight-edge { fill: var(--cup-edge); }
 .season-hover { fill: var(--season-hover); }
