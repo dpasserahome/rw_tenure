@@ -24,14 +24,14 @@ This file is the single source of truth for requirements, design, and status. **
 9. **On-page note (required):** only players with ≥1 Detroit playoff game from 1996-97 through 2007-08 are shown.
 10. **Layout:** vertical scrolling is fine; don't force-fit the viewport.
 11. **Filters:** a settings (gear) button at the right of the title row opens a modal. It has two sections: **Cup teams** (All players, default, plus one checkbox per Cup team) and **Acquired by** (Any method, default, plus Draft, Trade, Free agent, Waivers). In each section the "all" option and the value checkboxes are mutually exclusive, and several values can be checked at once. A **Show only / Highlight** switch sets whether the selection hides non-matching players or just highlights the matching rows.
-12. **Hosting:** a local static server for now; GitHub Pages later. Use relative paths only and no build step.
+12. **Hosting:** GitHub Pages at https://dpasserahome.github.io/rw_tenure/ (enabled 2026-11-16; serves `main`, root folder, and republishes on every push). Locally, use a static server. Use relative paths only and no build step.
 
 ## Files
 
 ```
 PLAN.md                 # this file
 CLAUDE.md               # pointer to this file for agents
-README.md               # 3-sentence project summary
+README.md               # live URL and 3-sentence project summary
 index.html              # page shell: title row + settings button, note, legend, filter status, #chart, filter modal, #tooltip
 css/style.css           # color tokens (light/dark), layout, tooltip
 js/timeline.js          # D3 v7 rendering (CDN, pinned d3@7.9.0)
@@ -46,7 +46,7 @@ Run:
 python3 scripts/fetch_data.py     # prints counts, extent, multi-stint players
 python3 -m http.server 8000       # http://localhost:8000
 ```
-Git remote: https://github.com/dpasserahome/rw_tenure.git (branch `main`).
+Git remote: https://github.com/dpasserahome/rw_tenure.git (branch `main`). Live site: https://dpasserahome.github.io/rw_tenure/ (pushing to `main` deploys it).
 
 ## Data source
 
@@ -163,7 +163,6 @@ Highlight mode and the acquisition-method filter are implemented (JS syntax and 
 
 - Additional per-player data points (to be specified by the user).
 - How each player left Detroit (the same HR transactions hold it).
-- Deployment to GitHub Pages.
 
 ## Agent notes
 
