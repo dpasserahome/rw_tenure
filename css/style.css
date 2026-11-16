@@ -129,6 +129,7 @@ h1 { margin: 0; font-size: 24px; }
 .filter-option input { margin: 0; accent-color: var(--accent); }
 .filter-option .count { margin-left: auto; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .filter-divider { height: 1px; margin: 6px 0; background: var(--grid); }
+.modal #filter-options fieldset + fieldset { margin-top: 14px; }
 .modal-hint { margin: 10px 0 0; font-size: 12px; color: var(--text-secondary); }
 .modal-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
 .button-primary { padding: 6px 16px; border: 0; border-radius: 6px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }

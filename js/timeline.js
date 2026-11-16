@@ -22,16 +22,26 @@
   const chartEl = document.getElementById("chart");
   const tooltip = document.getElementById("tooltip");
 
-  // Cup seasons selected in the filter modal; empty means "All players"
-  const selectedCups = new Set();
-  // "show" hides players off the selected Cup teams; "highlight" keeps everyone and tints the matching rows
+  // Filter groups in the settings modal. Values within a group combine with OR; groups combine with AND.
+  // An empty selection means the group doesn't filter.
+  const METHODS = ["Draft", "Trade", "Free agent", "Waivers"];
+  const METHOD_PHRASES = { Draft: "drafted", Trade: "acquired by trade", "Free agent": "signed as free agents", Waivers: "claimed off waivers" };
+  const FILTER_GROUPS = [
+    { key: "cups", legend: "Cup teams", allLabel: "All players", selected: new Set(),
+      matches: (p, v) => p.playoffSeasonsInWindow.includes(v) },
+    { key: "methods", legend: "Acquired by", allLabel: "Any method", selected: new Set(),
+      matches: (p, v) => p.acquisitions.some((a) => a.method === v) },
+  ];
+  // "show" hides non-matching players; "highlight" keeps everyone and tints the matching rows
   let filterMode = "show";
-  const onSelectedCup = (p) => p.playoffSeasonsInWindow.some((s) => selectedCups.has(s));
-  const matchingPlayers = (data) => data.players.filter(onSelectedCup);
-  const visiblePlayers = (data) => selectedCups.size === 0 || filterMode === "highlight"
+  const filterActive = () => FILTER_GROUPS.some((g) => g.selected.size > 0);
+  const matchesFilters = (p) => FILTER_GROUPS.every((g) => g.selected.size === 0 || [...g.selected].some((v) => g.matches(p, v)));
+  const matchingPlayers = (data) => data.players.filter(matchesFilters);
+  const visiblePlayers = (data) => !filterActive() || filterMode === "highlight"
     ? data.players
     : matchingPlayers(data);
-  const isHighlighted = (p) => filterMode === "highlight" && onSelectedCup(p);
+  const isHighlighted = (p) => filterMode === "highlight" && filterActive() && matchesFilters(p);
+  const orList = (items) => items.length > 1 ? `${items.slice(0, -1).join(", ")} or ${items.at(-1)}` : items[0];
 
   function buildLegend() {
     const legend = document.getElementById("legend");
@@ -248,51 +258,67 @@
     const options = document.getElementById("filter-options");
     const status = document.getElementById("filter-status");
     const dot = document.getElementById("filter-dot");
-    const cupCount = (s) => data.players.filter((p) => p.playoffSeasonsInWindow.includes(s)).length;
+    const [cupGroup, methodGroup] = FILTER_GROUPS;
+    cupGroup.values = data.cupSeasons.map((s) => ({ value: s, label: `${seasonLabel(s)} Cup team` }));
+    methodGroup.values = METHODS.map((m) => ({ value: m, label: m }));
 
-    options.innerHTML =
-      `<label class="filter-option"><input type="checkbox" value="all"><span class="all-label"></span><span class="count">${data.players.length}</span></label>` +
+    options.innerHTML = FILTER_GROUPS.map((g) =>
+      `<fieldset data-group="${g.key}"><legend>${g.legend}</legend>` +
+      `<label class="filter-option"><input type="checkbox" data-all><span class="all-label"></span><span class="count">${data.players.length}</span></label>` +
       `<div class="filter-divider"></div>` +
-      data.cupSeasons.map((s) =>
-        `<label class="filter-option"><input type="checkbox" value="${s}">${seasonLabel(s)} Cup team<span class="count">${cupCount(s)}</span></label>`
-      ).join("");
-    const allBox = options.querySelector('input[value="all"]');
-    const allLabel = options.querySelector(".all-label");
-    const cupBoxes = [...options.querySelectorAll('input:not([value="all"])')];
+      g.values.map((v, i) =>
+        `<label class="filter-option"><input type="checkbox" data-index="${i}">${v.label}<span class="count">${data.players.filter((p) => g.matches(p, v.value)).length}</span></label>`
+      ).join("") +
+      `</fieldset>`
+    ).join("");
+    for (const g of FILTER_GROUPS) {
+      const fs = options.querySelector(`[data-group="${g.key}"]`);
+      g.allBox = fs.querySelector("[data-all]");
+      g.allText = fs.querySelector(".all-label");
+      g.boxes = [...fs.querySelectorAll("[data-index]")];
+      // The "all" option and the group's values are exclusive: checking it clears them; clearing every value re-checks it
+      g.allBox.addEventListener("change", () => { g.selected.clear(); sync(); });
+      g.boxes.forEach((b) => b.addEventListener("change", () => {
+        const v = g.values[+b.dataset.index].value;
+        if (b.checked) g.selected.add(v); else g.selected.delete(v);
+        sync();
+      }));
+    }
     const modeRadios = [...modal.querySelectorAll('input[name="filter-mode"]')];
+
+    function describe() {
+      const cups = cupGroup.values.filter((v) => cupGroup.selected.has(v.value)).map((v) => seasonLabel(v.value));
+      const methods = METHODS.filter((m) => methodGroup.selected.has(m)).map((m) => METHOD_PHRASES[m]);
+      let text = "";
+      if (cups.length) text += ` from the ${orList(cups)} Cup ${cups.length > 1 ? "teams" : "team"}`;
+      if (methods.length) text += ` who were ${orList(methods)}`;
+      return text;
+    }
 
     function sync() {
       const highlight = filterMode === "highlight";
       modeRadios.forEach((r) => { r.checked = r.value === filterMode; });
-      allLabel.textContent = highlight ? "No highlight" : "All players";
-      allBox.checked = selectedCups.size === 0;
-      cupBoxes.forEach((b) => { b.checked = selectedCups.has(+b.value); });
-      dot.hidden = selectedCups.size === 0;
-      if (selectedCups.size === 0) {
+      for (const g of FILTER_GROUPS) {
+        g.allText.textContent = highlight ? "No highlight" : g.allLabel;
+        g.allBox.checked = g.selected.size === 0;
+        g.boxes.forEach((b) => { b.checked = g.selected.has(g.values[+b.dataset.index].value); });
+      }
+      dot.hidden = !filterActive();
+      if (!filterActive()) {
         status.hidden = true;
       } else {
-        const cups = data.cupSeasons.filter((s) => selectedCups.has(s)).map(seasonLabel);
-        const list = cups.length > 1 ? `${cups.slice(0, -1).join(", ")} or ${cups.at(-1)}` : cups[0];
-        const teams = `${list} Cup ${cups.length > 1 ? "teams" : "team"}`;
         const n = matchingPlayers(data).length;
         status.innerHTML = highlight
-          ? `<span class="highlight-swatch"></span>Highlighting ${n} players from the ${teams}.<button type="button">Clear</button>`
-          : `Showing ${n} players from the ${teams}.<button type="button">Show all</button>`;
+          ? `<span class="highlight-swatch"></span>Highlighting ${n} players${describe()}.<button type="button">Clear</button>`
+          : `Showing ${n} players${describe()}.<button type="button">Show all</button>`;
         status.hidden = false;
       }
       render(data);
     }
 
+    const clearAll = () => { FILTER_GROUPS.forEach((g) => g.selected.clear()); sync(); };
     modeRadios.forEach((r) => r.addEventListener("change", () => { filterMode = r.value; sync(); }));
-    // "All players" and the Cup filters are exclusive: checking All clears the Cups; clearing every Cup returns to All
-    allBox.addEventListener("change", () => { selectedCups.clear(); sync(); });
-    cupBoxes.forEach((b) => b.addEventListener("change", () => {
-      if (b.checked) selectedCups.add(+b.value); else selectedCups.delete(+b.value);
-      sync();
-    }));
-    status.addEventListener("click", (e) => {
-      if (e.target.closest("button")) { selectedCups.clear(); sync(); }
-    });
+    status.addEventListener("click", (e) => { if (e.target.closest("button")) clearAll(); });
     document.getElementById("settings-button").addEventListener("click", () => modal.showModal());
     // Close on a backdrop click; the form fills the dialog, so the dialog itself is the target only for backdrop clicks
     modal.addEventListener("click", (e) => { if (e.target === modal) modal.close(); });

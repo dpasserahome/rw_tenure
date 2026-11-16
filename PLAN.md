@@ -23,7 +23,7 @@ This file is the single source of truth for requirements, design, and status. **
 8. **Roles (bar color):** Forward (`C`, `L`, `R`), Defenseman (`D`), Goalie (`G`). No secondary stripes. Per-player position overrides live in `POSITION_OVERRIDES` in `fetch_data.py` (never hand-edit the JSON).
 9. **On-page note (required):** only players with ≥1 Detroit playoff game from 1996-97 through 2007-08 are shown.
 10. **Layout:** vertical scrolling is fine; don't force-fit the viewport.
-11. **Filters:** a settings (gear) button at the right of the title row opens a modal. It offers **All players** (default) and one checkbox per Cup team. "All players" and the Cup checkboxes are mutually exclusive, and several Cups can be checked at once. A **Show only / Highlight** switch sets whether the selected Cup teams hide everyone else or just highlight the matching rows.
+11. **Filters:** a settings (gear) button at the right of the title row opens a modal. It has two sections: **Cup teams** (All players, default, plus one checkbox per Cup team) and **Acquired by** (Any method, default, plus Draft, Trade, Free agent, Waivers). In each section the "all" option and the value checkboxes are mutually exclusive, and several values can be checked at once. A **Show only / Highlight** switch sets whether the selection hides non-matching players or just highlights the matching rows.
 12. **Hosting:** a local static server for now; GitHub Pages later. Use relative paths only and no build step.
 
 ## Files
@@ -111,16 +111,17 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 
 ## Filters (`setupFilters` in `js/timeline.js`)
 
-- State is `selectedCups`, a set of Cup season start years (empty means All players), and `filterMode`, `"show"` (default) or `"highlight"`. One selection is shared by both modes; switching modes keeps it.
+- State: `FILTER_GROUPS` (Cup teams, Acquired by), each with a `selected` set and a `matches(player, value)` test, plus `filterMode`, `"show"` (default) or `"highlight"`. An empty set means that group doesn't filter. One selection is shared by both modes; switching modes keeps it.
+- **Cup team:** that season is in `playoffSeasonsInWindow`. Counts: '96-97 = 23, '97-98 = 24, '01-02 = 23, '07-08 = 23; 22 players are on no Cup team.
+- **Acquisition method:** any entry in `acquisitions` has that method, from any Detroit stint (so a Cup + method match doesn't require the acquisition to be for the Cup-season stint). Counts: Draft 27, Trade 26, Free agent 34, Waivers 3 (players with several stints can count under several methods).
+- Values within a group combine with OR; groups combine with AND (e.g. '07-08 Cup + Free agent = 12 players).
 - **Show only:** only matching players are drawn.
-- **Highlight:** every player is drawn. Matching rows get a translucent gold band across the full row (`--row-highlight`, so column fills still show through), a 3px `--cup-edge` strip at the left edge, and a bold name. Group header counts stay at the full totals. The "All players" option reads "No highlight" in this mode.
-- A player is on a Cup team if that season is in `playoffSeasonsInWindow`. Several checked Cups combine with OR (on any of them). Counts: '96-97 = 23, '97-98 = 24, '01-02 = 23, '07-08 = 23; 22 players are on no Cup team.
-- Checking All clears the Cups. Checking a Cup unchecks All. Unchecking the last Cup re-checks All.
-- Changes apply immediately. The modal is a native `<dialog>` that closes on Done, Esc, or a backdrop click.
-- While Cups are selected, a red dot shows on the gear and a status line under the legend reads "Showing N players from the … Cup team(s)" with a "Show all" link, or in Highlight mode a highlight swatch and "Highlighting N players from the … Cup team(s)" with a "Clear" link.
-- The x-axis extent always comes from all players, so columns don't shift when filtering. Group header counts reflect the filtered rows. Filter state isn't persisted (no URL or storage).
-- The mode switch is a segmented control of two radio buttons above the player list.
-- Colors: `--accent` token (Red Wings red, `#c8102e` / `#e0384f` dark) for the dot, checkboxes, link, and Done button.
+- **Highlight:** every player is drawn. Matching rows get a translucent gold band across the full row (`--row-highlight`, so column fills still show through), a 3px `--cup-edge` strip at the left edge, and a bold name. Group header counts stay at the full totals. Each group's "all" option reads "No highlight" in this mode.
+- Checking a group's "all" option clears its values. Checking a value unchecks it. Unchecking the last value re-checks it.
+- Changes apply immediately. The modal is a native `<dialog>` that closes on Done, Esc, or a backdrop click. The mode switch is a segmented control of two radio buttons above the groups.
+- While any value is selected, a red dot shows on the gear and a status line under the legend describes the selection, e.g. "Showing 12 players from the 2007-08 Cup team who were signed as free agents." with a "Show all" link, or in Highlight mode a highlight swatch, "Highlighting …", and a "Clear" link. Both links clear every group.
+- The x-axis extent always comes from all players, so columns don't shift when filtering. Group header counts reflect the drawn rows. Filter state isn't persisted (no URL or storage).
+- Colors: `--accent` token (Red Wings red, `#c8102e` / `#e0384f` dark) for the dot, checkboxes, mode switch, link, and Done button.
 
 ## Decisions
 
@@ -133,7 +134,8 @@ NHL official stats API (public JSON, no key). Spot-check against Hockey-Referenc
 - **Cup team membership = played ≥1 Detroit playoff game that Cup season.** This matches the site's inclusion rule. It isn't the official Cup engraving list.
 - **Acquisition = how Detroit got the player, per stint.** Draft from the NHL API; trades, signings, and waivers from Hockey-Reference transactions. Unsigned draft picks who later sign count as Drafted; pick-for-pick trades before the draft are not shown.
 - **Multiple Cup filters combine with OR.** The user asked for players who won any selected Cup.
-- **Highlight is a mode of the Cup filter, not a separate selection.** The user chose one shared selection with a Show only / Highlight switch over independent show and highlight controls (simpler modal). Every match gets the same highlight regardless of how many checked Cups the player won. Gold matches the Cup columns; red accent would compete with the role colors.
+- **Highlight is a mode of the Cup filter, not a separate selection.** The user chose one shared selection with a Show only / Highlight switch over independent show and highlight controls (simpler modal). Every match gets the same highlight regardless of how many checked values the player matches.
+- **Acquisition filter: OR within the group, AND with the Cup group, matching any stint's acquisition.** Standard faceted-filter behavior; per-stint matching against the Cup season wasn't requested. Gold matches the Cup columns; red accent would compete with the role colors.
 - **Cup and lockout marking:** shown with column fills plus styled season labels and legend entries, not separate header text. This keeps the header to one row of labels.
 
 ## Status
@@ -151,7 +153,7 @@ Acquisitions in the tooltip are done (data for all 79 players, no `Unknown`). Th
 
 Cup-team filters (settings modal) are done and were checked by headless Chrome in light and dark mode: modal toggle logic, row counts (1996-97 + 2007-08 = 40 players), and Show all.
 
-Highlight mode is implemented (JS syntax and match counts checked in Node: 2001-02 + 2007-08 = 38 players) but **not yet checked in a browser**: browser automation was blocked in the session that built it. Check the highlight look in light and dark mode, the segmented switch, and the status line.
+Highlight mode and the acquisition-method filter are implemented (JS syntax and match counts checked in Node: '01-02 + '07-08 Cups = 38 players; Trade = 26; '07-08 + Free agent = 12) but **not yet checked in a browser**: browser automation was blocked in the sessions that built them. Check the highlight look in light and dark mode, the segmented switch, the two-section modal (including at phone width), and the status line wording.
 
 **Open questions:** none.
 
