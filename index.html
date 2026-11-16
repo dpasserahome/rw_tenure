@@ -26,10 +26,15 @@
   <dialog class="modal" id="settings-modal" aria-labelledby="settings-title">
     <form method="dialog">
       <h2 id="settings-title">Filters</h2>
+      <fieldset class="mode-switch">
+        <legend>Mode</legend>
+        <label><input type="radio" name="filter-mode" value="show" checked>Show only</label>
+        <label><input type="radio" name="filter-mode" value="highlight">Highlight</label>
+      </fieldset>
       <fieldset>
         <legend>Players</legend>
         <div id="filter-options"></div>
-        <p class="modal-hint">Cup winners played at least one playoff game for Detroit in that Cup run. Checking several Cups shows players who won any of them.</p>
+        <p class="modal-hint">Cup winners played at least one playoff game for Detroit in that Cup run. Checking several Cups shows or highlights players who won any of them.</p>
       </fieldset>
       <div class="modal-actions"><button type="submit" class="button-primary">Done</button></div>
     </form>

@@ -18,6 +18,7 @@
   --tooltip-border: #dcdbd6;
   --season-hover: rgb(11 11 11 / 0.08);
   --accent: #c8102e;
+  --row-highlight: rgb(217 170 40 / 0.3);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -40,6 +41,7 @@
     --tooltip-border: #3a3a37;
     --season-hover: rgb(240 239 236 / 0.09);
     --accent: #e0384f;
+    --row-highlight: rgb(227 190 85 / 0.2);
   }
 }
 :root[data-theme="dark"] {
@@ -62,6 +64,7 @@
   --tooltip-border: #3a3a37;
   --season-hover: rgb(240 239 236 / 0.09);
   --accent: #e0384f;
+  --row-highlight: rgb(227 190 85 / 0.2);
 }
 
 * { box-sizing: border-box; }
@@ -89,6 +92,7 @@ h1 { margin: 0; font-size: 24px; }
 .legend-core { width: 14px; height: 14px; background: var(--core); border: 1px solid var(--grid); }
 
 .filter-status { margin: 0 0 8px; font-size: 13px; color: var(--text-primary); }
+.filter-status .highlight-swatch { display: inline-block; width: 14px; height: 10px; margin-right: 6px; vertical-align: -1px; background: var(--row-highlight); border-left: 3px solid var(--cup-edge); }
 .filter-status button { margin-left: 6px; padding: 0; border: 0; background: none; color: var(--accent); font: inherit; cursor: pointer; text-decoration: underline; }
 
 .icon-button {
@@ -114,6 +118,13 @@ h1 { margin: 0; font-size: 24px; }
 .modal h2 { margin: 0 0 12px; font-size: 18px; }
 .modal fieldset { margin: 0; padding: 0; border: 0; }
 .modal legend { padding: 0; margin-bottom: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.modal .mode-switch { display: flex; margin-bottom: 14px; }
+.mode-switch label { flex: 1; position: relative; padding: 6px 10px; border: 1px solid var(--grid); text-align: center; font-size: 13px; cursor: pointer; }
+.mode-switch label:first-of-type { border-radius: 6px 0 0 6px; }
+.mode-switch label:last-of-type { border-radius: 0 6px 6px 0; border-left: 0; }
+.mode-switch input { position: absolute; opacity: 0; pointer-events: none; }
+.mode-switch label:has(input:checked) { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.mode-switch label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
 .filter-option { display: flex; align-items: center; gap: 8px; padding: 5px 0; cursor: pointer; }
 .filter-option input { margin: 0; accent-color: var(--accent); }
 .filter-option .count { margin-left: auto; color: var(--text-muted); font-variant-numeric: tabular-nums; }
@@ -135,7 +146,9 @@ h1 { margin: 0; font-size: 24px; }
 .axis line, .axis path { stroke: var(--grid); }
 .row-label { fill: var(--text-primary); font-size: 12px; }
 .group-label { fill: var(--text-muted); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
-.row:hover .row-label { font-weight: 600; }
+.row:hover .row-label, .row.is-highlighted .row-label { font-weight: 600; }
+.row-highlight { fill: var(--row-highlight); }
+.row-highlight-edge { fill: var(--cup-edge); }
 .season-hover { fill: var(--season-hover); }
 .axis text.is-cup { fill: var(--cup-text); font-weight: 600; }
 .axis text.is-lockout { fill: var(--text-muted); font-style: italic; }

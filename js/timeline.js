@@ -24,9 +24,14 @@
 
   // Cup seasons selected in the filter modal; empty means "All players"
   const selectedCups = new Set();
-  const visiblePlayers = (data) => selectedCups.size === 0
+  // "show" hides players off the selected Cup teams; "highlight" keeps everyone and tints the matching rows
+  let filterMode = "show";
+  const onSelectedCup = (p) => p.playoffSeasonsInWindow.some((s) => selectedCups.has(s));
+  const matchingPlayers = (data) => data.players.filter(onSelectedCup);
+  const visiblePlayers = (data) => selectedCups.size === 0 || filterMode === "highlight"
     ? data.players
-    : data.players.filter((p) => p.playoffSeasonsInWindow.some((s) => selectedCups.has(s)));
+    : matchingPlayers(data);
+  const isHighlighted = (p) => filterMode === "highlight" && onSelectedCup(p);
 
   function buildLegend() {
     const legend = document.getElementById("legend");
@@ -98,6 +103,14 @@
     svg.selectAll(".row-bg").data(rows.filter((r) => r.type === "player" && r.alt)).join("rect")
       .attr("x", 0).attr("width", width).attr("y", (r) => r.y).attr("height", ROW_H)
       .attr("fill", "var(--row-alt)");
+    // Highlighted rows: a translucent band (so Cup and core columns still show through) with a solid edge in the label column
+    const highlighted = rows.filter((r) => r.type === "player" && isHighlighted(r.player));
+    svg.selectAll(".row-highlight").data(highlighted).join("rect")
+      .attr("class", "row-highlight")
+      .attr("x", 0).attr("width", width).attr("y", (r) => r.y).attr("height", ROW_H);
+    svg.selectAll(".row-highlight-edge").data(highlighted).join("rect")
+      .attr("class", "row-highlight-edge")
+      .attr("x", 0).attr("width", 3).attr("y", (r) => r.y).attr("height", ROW_H);
     const bodyHover = drawHoverColumn(svg, height);
 
     // Season grid
@@ -118,7 +131,8 @@
 
     // Player rows
     const row = svg.selectAll(".row").data(rows.filter((r) => r.type === "player")).join("g")
-      .attr("class", "row").attr("transform", (r) => `translate(0,${r.y})`);
+      .attr("class", "row").classed("is-highlighted", (r) => isHighlighted(r.player))
+      .attr("transform", (r) => `translate(0,${r.y})`);
     row.append("text").attr("class", "row-label")
       .attr("x", LABEL_W - 10).attr("y", ROW_H / 2).attr("dy", "0.35em").attr("text-anchor", "end")
       .text((r) => r.player.name);
@@ -237,15 +251,20 @@
     const cupCount = (s) => data.players.filter((p) => p.playoffSeasonsInWindow.includes(s)).length;
 
     options.innerHTML =
-      `<label class="filter-option"><input type="checkbox" value="all">All players<span class="count">${data.players.length}</span></label>` +
+      `<label class="filter-option"><input type="checkbox" value="all"><span class="all-label"></span><span class="count">${data.players.length}</span></label>` +
       `<div class="filter-divider"></div>` +
       data.cupSeasons.map((s) =>
         `<label class="filter-option"><input type="checkbox" value="${s}">${seasonLabel(s)} Cup team<span class="count">${cupCount(s)}</span></label>`
       ).join("");
     const allBox = options.querySelector('input[value="all"]');
+    const allLabel = options.querySelector(".all-label");
     const cupBoxes = [...options.querySelectorAll('input:not([value="all"])')];
+    const modeRadios = [...modal.querySelectorAll('input[name="filter-mode"]')];
 
     function sync() {
+      const highlight = filterMode === "highlight";
+      modeRadios.forEach((r) => { r.checked = r.value === filterMode; });
+      allLabel.textContent = highlight ? "No highlight" : "All players";
       allBox.checked = selectedCups.size === 0;
       cupBoxes.forEach((b) => { b.checked = selectedCups.has(+b.value); });
       dot.hidden = selectedCups.size === 0;
@@ -254,12 +273,17 @@
       } else {
         const cups = data.cupSeasons.filter((s) => selectedCups.has(s)).map(seasonLabel);
         const list = cups.length > 1 ? `${cups.slice(0, -1).join(", ")} or ${cups.at(-1)}` : cups[0];
-        status.innerHTML = `Showing ${visiblePlayers(data).length} players from the ${list} Cup ${cups.length > 1 ? "teams" : "team"}.<button type="button">Show all</button>`;
+        const teams = `${list} Cup ${cups.length > 1 ? "teams" : "team"}`;
+        const n = matchingPlayers(data).length;
+        status.innerHTML = highlight
+          ? `<span class="highlight-swatch"></span>Highlighting ${n} players from the ${teams}.<button type="button">Clear</button>`
+          : `Showing ${n} players from the ${teams}.<button type="button">Show all</button>`;
         status.hidden = false;
       }
       render(data);
     }
 
+    modeRadios.forEach((r) => r.addEventListener("change", () => { filterMode = r.value; sync(); }));
     // "All players" and the Cup filters are exclusive: checking All clears the Cups; clearing every Cup returns to All
     allBox.addEventListener("change", () => { selectedCups.clear(); sync(); });
     cupBoxes.forEach((b) => b.addEventListener("change", () => {
