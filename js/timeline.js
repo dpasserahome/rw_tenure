@@ -32,8 +32,7 @@
     return spans;
   }
 
-  // Runs of [from, to) in season units, played = had a Detroit playoff game. The lockout column
-  // splits in half, each half following its neighboring season, so it never adds a dim patch.
+  // Runs of [from, to) in season units, played = had a Detroit playoff game. The lockout had no playoffs, so it's always dim.
   function playoffRuns(span, playoffSeasons) {
     const played = (y) => playoffSeasons.includes(y);
     const runs = [];
@@ -41,12 +40,7 @@
       const last = runs.at(-1);
       if (last && last.played === on) last.to = to; else runs.push({ from, to, played: on });
     };
-    for (let y = span.start; y <= span.end; y++) {
-      if (y === LOCKOUT_SEASON) {
-        add(y, y + 0.5, played(y - 1));
-        add(y + 0.5, y + 1, played(y + 1));
-      } else add(y, y + 1, played(y));
-    }
+    for (let y = span.start; y <= span.end; y++) add(y, y + 1, played(y));
     runs[0].from = barStart(span);
     runs.at(-1).to = barEnd(span);
     return runs;
