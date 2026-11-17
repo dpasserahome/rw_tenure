@@ -17,7 +17,8 @@ This file is the single source of truth for requirements, design, and status. **
 2. **Inclusion:** a player is included **only if they played ≥1 playoff game for Detroit in a core-window season**. Regular-season games alone never qualify.
 3. **Tenure shown:** for included players, show the **entire** Detroit tenure, including seasons outside the window and regular-season-only seasons.
 4. **Tenure season:** any season with ≥1 Detroit game (regular season or playoff).
-5. **Gaps:** non-consecutive stints are separate bar segments on the same row. The 2004-05 lockout (no games played) is **not** a gap. A gap in which the player played **no games for any team** (injury, retirement; e.g. Krupp, Hasek) is not a break either: the bar continues through it in a dimmer shade of the role color.
+5. **Gaps:** non-consecutive stints are separate bar segments on the same row. The 2004-05 lockout (no games played) is **not** a gap. A gap in which the player played **no games for any team** (injury, retirement; e.g. Krupp, Hasek) is not a break either: the bar continues through it.
+5a. **Dimmed seasons:** any tenure season in which the player played no Detroit playoff game is drawn in a dimmer shade of the role color ("Did not play in playoffs"). This covers zero-game gaps (Hasek 2002-03), regular-season-only seasons (injury, scratches, Hasek 2003-04), a mid-season departure's half column (Gilchrist 2001-02), and seasons Detroit missed the playoffs (1985-86, 1989-90, 2016-17 on). Currently 76 of 473 tenure seasons.
 6. **Extent:** computed from data. Currently Steve Yzerman (1983-84) through Darren Helm and Valtteri Filppula (2020-21).
 7. **Precision:** season-level, except that a stint that began or ended mid-season fills only half of that season's column, whatever the date (e.g. Gilchrist, waived to Dallas in Feb 2002, stops halfway through the 2001-02 Cup column). The tooltip's acquisition dates give specifics for arrivals; departure dates aren't shown.
 8. **Roles (bar color):** Forward (`C`, `L`, `R`), Defenseman (`D`), Goalie (`G`). No secondary stripes. Per-player position overrides live in `POSITION_OVERRIDES` in `fetch_data.py` (never hand-edit the JSON).
@@ -108,6 +109,7 @@ One entry per season over the chart's extent (1983-84 to 2020-21), skipping the 
   "generated": "YYYY-MM-DD",
   "coreWindow": { "start": 1996, "end": 2007 },
   "cupSeasons": [1996, 1997, 2001, 2007],
+  "missedPlayoffs": [1985, 1989, 2016, 2017, 2018, 2019, 2020],
   "payroll": [
     { "season": 1983, "estimate": true, "leagueAvg": 3557964, "avgSalary": 118788 },
     { "season": 1997, "measure": "salary", "source": "USA Today, via Rodney Fort", "note": "Includes Sergei Fedorov's $28M…",
@@ -119,6 +121,7 @@ One entry per season over the chart's extent (1983-84 to 2020-21), skipping the 
       "stints": [{ "start": 1983, "end": 2005 }],  // optional "joined", "left", see below
       "inactive": [],
       "playoffSeasonsInWindow": [1996, 1997],
+      "playoffSeasons": [1983, 1984, 1986],
       "acquisitions": [{ "season": 1983, "method": "Draft", "year": 1983, "round": 1, "overall": 4 }] }
   ]
 }
@@ -128,6 +131,8 @@ One entry per season over the chart's extent (1983-84 to 2020-21), skipping the 
 - Seasons are identified by start year (1996 = 1996-97).
 - Stints are inclusive; a bar spans from `start` to `end + 1` on the axis. Stints contain only seasons with Detroit games. Optional `joined` (ISO date) and `left` (`{date, method, to}`, method `Trade`, `Waivers`, or `Free agent` for a non-NHL club) mark mid-season moves.
 - `inactive`: inclusive gaps between stints in which the player played nowhere (e.g. Krupp `[{start: 1999, end: 2000}]`). Always present; usually empty.
+- `missedPlayoffs`: seasons Detroit missed the playoffs, from `MISSED_PLAYOFFS` in `fetch_data.py`. The script stops if it doesn't equal the non-lockout seasons in the extent where no included player has a Detroit playoff game.
+- `playoffSeasons`: every season with ≥1 Detroit NHL playoff game, from the landing `seasonTotals` rows with `gameTypeId == 3` (any era). Its in-window subset matches `playoffSeasonsInWindow` (from the stats API) for all 79 players.
 - `acquisitions`: in date order. `method` is `Draft` (`year`, `round`, `overall`), `Trade`, `Free agent`, `Waivers` (these three have an ISO `date`, e.g. "1996-10-09", and optional `from` team name), or `Unknown`. `season` is the season it applied to (never before the stint start). Currently 37 free agent, 28 trade, 27 draft, 3 waivers.
 - Players are pre-sorted by role (Forward → Defenseman → Goalie), then first season, last season, and last name. The page renders in file order.
 - `payroll`: one entry per season in the extent except 2004. `measure` is `salary` or `cap`; `topOthersAvg` is the average of the five highest payrolls other than Detroit's; `leagueAvg` includes Detroit; `note` is optional (Fedorov, Spotrac caveat, LTIR, salaries over the cap). `cap` (2005 on) is the salary cap; `capNote` is optional. Amounts are whole dollars.
@@ -139,12 +144,12 @@ One entry per season over the chart's extent (1983-84 to 2020-21), skipping the 
 - **X-axis:** linear scale over season start years. The width follows the container, with a minimum of 640px. Every season is labeled (`1996-97` format), rotated 55° counter-clockwise with the label's start anchored at the top center of its column. If the columns are too narrow for the labels not to overlap (below ~12px per season), every other season is labeled, choosing odd or even start years by whichever labels more Cup seasons (currently odd: 1997-98, 2001-02, 2007-08). Below 700px viewport width, the chart scrolls horizontally.
 - **Sticky axis header** at the top, holding only the rotated season labels. There are no separate Cup or Lockout subheaders. Cup season labels are bold dark gold (`--cup-text`), and the 2004-05 label is muted italic.
 - **Mid-season bar ends:** a stint with `joined` starts, and one with `left` ends, at the middle of that season's column, regardless of the date (so early-October arrivals like Shanahan, Cleary and Legace also start halfway). There is no legend entry.
-- **Inactive gaps:** drawn under the adjacent stints at 35% opacity of the role color, extended 4px each side so the bar reads as continuous.
-- **Column fills** (header and body): the core window is shaded light blue. Cup seasons have an opaque light gold fill (`--cup-fill`) with thin gold edge lines (`--cup-edge`), replacing the blue shading in those columns. The 2004-05 lockout column has a dark grey fill (`--lockout-fill`).
-- **Colors:** validated categorical palette, defined as CSS tokens with light and dark variants. Forward is blue (`#2a78d6` / `#3987e5`), Defenseman orange (`#eb6834` / `#d95926`), Goalie aqua (`#1baf7a` / `#199e70`). The legend covers roles, inactive gaps ("Still with Detroit, no games played"), the core window, Cup seasons, and the lockout.
+- **Bars and dimming:** stints joined by an inactive gap are drawn as one bar (`barSpans`). Each bar is filled with a hard-stop `linearGradient` (`playoffRuns`): full color for seasons in `playoffSeasons`, 35% opacity (`DIM_OPACITY`) for the rest. The lockout column splits in half, each half following its neighboring season, so it never adds a dim patch.
+- **Column fills** (header and body): the core window is shaded light blue. Cup seasons have an opaque light gold fill (`--cup-fill`) with thin gold edge lines (`--cup-edge`), replacing the blue shading in those columns. The 2004-05 lockout column has a dark grey fill (`--lockout-fill`). Seasons Detroit missed the playoffs (`missedPlayoffs`) have a lighter grey fill (`--no-playoffs-fill`, legend "No playoff berth").
+- **Colors:** validated categorical palette, defined as CSS tokens with light and dark variants. Forward is blue (`#2a78d6` / `#3987e5`), Defenseman orange (`#eb6834` / `#d95926`), Goalie aqua (`#1baf7a` / `#199e70`). The legend covers roles, dimmed seasons ("Did not play in playoffs"), the core window, Cup seasons, missed playoffs ("No playoff berth"), and the lockout.
 - **Season hover:** the season column under the pointer is tinted (`--season-hover` token) in both the sticky header and the body, and its axis label turns bold if that season has one. It clears when the pointer leaves the plot area.
-- **Tooltip:** hovering anywhere on a row shows the name, position and role, stint ranges, acquisitions ("Drafted 1983, 1st round (4th OA)", "Trade from Hartford Whalers, 10/09/1996", "Free agent, 07/01/2007", "Waiver claim from …"; prefixed with the season when there are several), any no-games-played ranges, number of Detroit seasons (excluding the lockout), and Cup wins (Cup seasons in `playoffSeasonsInWindow`, same rule as the filters; "None" if empty).
-- **Season payroll tooltip:** hovering anywhere in the sticky header over a season column shows "{season} · Stanley Cup" (if a Cup season), then Detroit's payroll with its rank ("$56.4M (1st of 26)"), "vs. league average ($27.9M): 202%", "vs. top 5 other teams ($38.0M avg): 148%", then "vs. salary cap ($50.3M): 89%" (2012-13 adds ", prorated for the 48-game season" inside the parentheses) or a muted "No salary cap", then any note, and a muted line with the measure ("Player salaries" or "Salary-cap hits") and source. Estimated seasons say the payroll wasn't published and give "League average: about $X (estimate)" and "No salary cap" with an explanation; 2004-05 says "No season (lockout)". A muted italic hint, "Hover a season for payroll", sits in the header's empty name column. Money shows as $X.XM (or $XK under $1M).
+- **Tooltip:** hovering anywhere on a row shows the name, position and role, stint ranges, acquisitions ("Drafted 1983, 1st round (4th OA)", "Trade from Hartford Whalers, 10/09/1996", "Free agent, 07/01/2007", "Waiver claim from …"; prefixed with the season when there are several), "Did not play in playoffs" ranges (lockout bridged, inactive seasons included), any no-games-played ranges, number of Detroit seasons (excluding the lockout), and Cup wins (Cup seasons in `playoffSeasonsInWindow`, same rule as the filters; "None" if empty).
+- **Season payroll tooltip:** hovering anywhere in the sticky header over a season column shows "{season} · Stanley Cup" (Cup seasons) or "{season} · Missed playoffs", then Detroit's payroll with its rank ("$56.4M (1st of 26)"), "vs. league average ($27.9M): 202%", "vs. top 5 other teams ($38.0M avg): 148%", then "vs. salary cap ($50.3M): 89%" (2012-13 adds ", prorated for the 48-game season" inside the parentheses) or a muted "No salary cap", then any note, and a muted line with the measure ("Player salaries" or "Salary-cap hits") and source. Estimated seasons say the payroll wasn't published and give "League average: about $X (estimate)" and "No salary cap" with an explanation; 2004-05 says "No season (lockout)". A muted italic hint, "Hover a season for payroll", sits in the header's empty name column. Money shows as $X.XM (or $XK under $1M).
 - **Payroll footnote:** a `footer.sources` under the chart names the sources by season range (with links to Fort's data page and an archived CapFriendly page), says which seasons are salaries vs. cap hits, that salary caps are the CBA upper limits, mentions the Fedorov adjustment, and explains the pre-1989-90 estimate.
 - Re-renders on window resize.
 
@@ -168,7 +173,8 @@ One entry per season over the chart's extent (1983-84 to 2020-21), skipping the 
 - **Lockout bridging:** a player with Detroit seasons on both sides of 2004-05 has one continuous stint.
 - **Row order:** within each role, sort by start season, then end season, then name.
 - **Dandenault is a Defenseman** (override `D`): he played defense for most of his Detroit tenure; the API lists `R`.
-- **Zero-game gaps are dimmed, not broken:** seasons where the player played for no one (Krupp 1999-01 injury, Hasek 2002-03 retirement) are part of the tenure but shown dimmer. They don't count toward "Seasons with Detroit".
+- **Zero-game gaps are part of the bar, not breaks:** seasons where the player played for no one (Krupp 1999-01 injury, Hasek 2002-03 retirement) are part of the tenure, but they don't count toward "Seasons with Detroit".
+- **Dim = no Detroit playoff games** (user's call, 2026-11-17), replacing "dim = no games anywhere". It's per player and literal, so seasons Detroit missed the playoffs are dimmed for everyone on the roster.
 - **Farm-team seasons are not tenure:** a season counts only if the player played for Detroit itself (a call-up with ≥1 Detroit game counts). A season spent only with a minor-league affiliate is a normal break, not a dimmed gap (e.g. Aaron Ward 1995-96). Farm teams and pre-Detroit history are never shown on the page.
 - **Cup team membership = played ≥1 Detroit playoff game that Cup season.** This matches the site's inclusion rule. It isn't the official Cup engraving list.
 - **Acquisition = how Detroit got the player, per stint.** Draft from the NHL API; trades, signings, and waivers from Hockey-Reference transactions. Unsigned draft picks who later sign count as Drafted; pick-for-pick trades before the draft are not shown.
@@ -185,7 +191,7 @@ One entry per season over the chart's extent (1983-84 to 2020-21), skipping the 
 
 ## Status
 
-**Done:** fetch script, generated data (79 players: 40 F, 31 D, 8 G), and a working timeline page with all rendering features above, including the Dandenault override, dimmed inactive gaps (Krupp, Hasek), season-column hover highlighting, rotated season labels, and gold Cup / grey lockout columns. Checked by screenshot at desktop and narrow (600px) widths, in light and dark mode.
+**Done:** fetch script, generated data (79 players: 40 F, 31 D, 8 G), and a working timeline page with all rendering features above, including the Dandenault override, dimmed no-playoff seasons, season-column hover highlighting, rotated season labels, and gold Cup / grey lockout columns. Checked by screenshot at desktop and narrow (600px) widths, in light and dark mode.
 
 **Verification checklist:**
 - [x] Earliest start is Yzerman, 1983-84 (from data).
@@ -203,6 +209,8 @@ Also done: acquisitions in the tooltip (all 79 players, no `Unknown`), Cup-team 
 - Name links: clickable, open a new tab, and still show the tooltip.
 
 Also done (2026-11-16): the season payroll tooltip and sources footnote. Checked in headless Chrome, light and dark: 1997-98 (Fedorov note), 1985-86 (estimate), 2004-05 (lockout), 2018-19 (LTIR note), 2001-02, and the footer. The salary-cap line was checked the same way on 2013-14 (over-cap note), 2012-13 (proration), 2007-08, 1997-98 and 1985-86.
+
+Also done (2026-11-17): dimming changed to "Did not play in playoffs" (new `playoffSeasons` field, gradient bars), and "No playoff berth" column fills (new `missedPlayoffs` field). Checked by headless Chrome screenshot in light and dark; the new tooltip lines haven't been seen in a browser.
 
 **Open questions:** none.
 

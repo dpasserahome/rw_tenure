@@ -6,7 +6,7 @@
   ];
   const POSITION_NAMES = { C: "Center", L: "Left Wing", R: "Right Wing", D: "Defense", G: "Goalie" };
   const LOCKOUT_SEASON = 2004;
-  const INACTIVE_OPACITY = 0.35;
+  const DIM_OPACITY = 0.35; // seasons with no Detroit playoff games
 
   const ROW_H = 22;
   const BAR_H = 12;
@@ -19,6 +19,49 @@
   // A stint that began or ended mid-season fills half of that season's column, whatever the date
   const barStart = (s) => s.start + (s.joined ? 0.5 : 0);
   const barEnd = (s) => s.end + (s.left ? 0.5 : 1);
+
+  // Drawn bars: stints joined across inactive gaps (no games anywhere), so one bar covers the whole run
+  function barSpans(p) {
+    const gapStarts = new Set((p.inactive || []).map((g) => g.start));
+    const spans = [];
+    for (const s of p.stints) {
+      const prev = spans.at(-1);
+      if (prev && gapStarts.has(prev.end + 1)) Object.assign(prev, { end: s.end, left: s.left });
+      else spans.push({ start: s.start, end: s.end, joined: s.joined, left: s.left });
+    }
+    return spans;
+  }
+
+  // Runs of [from, to) in season units, played = had a Detroit playoff game. The lockout column
+  // splits in half, each half following its neighboring season, so it never adds a dim patch.
+  function playoffRuns(span, playoffSeasons) {
+    const played = (y) => playoffSeasons.includes(y);
+    const runs = [];
+    const add = (from, to, on) => {
+      const last = runs.at(-1);
+      if (last && last.played === on) last.to = to; else runs.push({ from, to, played: on });
+    };
+    for (let y = span.start; y <= span.end; y++) {
+      if (y === LOCKOUT_SEASON) {
+        add(y, y + 0.5, played(y - 1));
+        add(y + 0.5, y + 1, played(y + 1));
+      } else add(y, y + 1, played(y));
+    }
+    runs[0].from = barStart(span);
+    runs.at(-1).to = barEnd(span);
+    return runs;
+  }
+
+  // Inclusive season ranges, bridging the lockout
+  function seasonRanges(years) {
+    const ranges = [];
+    for (const y of years) {
+      const last = ranges.at(-1);
+      if (last && (y === last.end + 1 || (y === LOCKOUT_SEASON + 1 && last.end === LOCKOUT_SEASON - 1))) last.end = y;
+      else ranges.push({ start: y, end: y });
+    }
+    return ranges;
+  }
 
   const seasonLabel = (y) => `${y}-${String((y + 1) % 100).padStart(2, "0")}`;
   const shortSeason = (y) => `'${String(y % 100).padStart(2, "0")}-${String((y + 1) % 100).padStart(2, "0")}`;
@@ -52,9 +95,10 @@
     legend.innerHTML = ROLES.map((r) =>
       `<span class="legend-item"><span class="legend-swatch" style="background:${r.color}"></span>${r.key}</span>`
     ).join("") +
-      `<span class="legend-item"><span class="legend-swatch legend-inactive"></span>Still with Detroit, no games played</span>` +
+      `<span class="legend-item"><span class="legend-swatch legend-dim"></span>Did not play in playoffs</span>` +
       `<span class="legend-item"><span class="legend-core"></span>1996-97 to 2007-08</span>` +
       `<span class="legend-item"><span class="legend-cup"></span>Stanley Cup season</span>` +
+      `<span class="legend-item"><span class="legend-no-playoffs"></span>No playoff berth</span>` +
       `<span class="legend-item"><span class="legend-lockout"></span>Lockout (no season)</span>`;
   }
 
@@ -89,7 +133,7 @@
     // Rotated labels are spaced perpendicular to their baseline; thin them only if they would overlap
     const labelEvery = pxPerSeason * Math.sin(LABEL_ANGLE * Math.PI / 180) >= 10 ? 1 : 2;
     const seasons = d3.range(minYear, maxYear);
-    const { coreWindow, cupSeasons } = data;
+    const { coreWindow, cupSeasons, missedPlayoffs } = data;
 
     // Sticky axis header
     const axisWrap = d3.select(chartEl).append("div").attr("class", "axis-sticky");
@@ -149,17 +193,21 @@
     const row = svg.selectAll(".row").data(rows.filter((r) => r.type === "player")).join("g")
       .attr("class", "row").classed("is-highlighted", (r) => isHighlighted(r.player))
       .attr("transform", (r) => `translate(0,${r.y})`);
-    // Inactive gaps (no games anywhere) join the adjacent stints; extend under them so the bar reads as continuous
-    row.selectAll(".bar-inactive").data((r) => (r.player.inactive || []).map((g) => ({ ...g, color: r.role.color }))).join("rect")
-      .attr("class", "bar-inactive")
-      .attr("x", (g) => x(g.start) - 4).attr("width", (g) => x(g.end + 1) - x(g.start) + 8)
-      .attr("y", (ROW_H - BAR_H) / 2).attr("height", BAR_H)
-      .attr("fill", (g) => g.color).attr("fill-opacity", INACTIVE_OPACITY);
-    row.selectAll(".bar").data((r) => r.player.stints.map((s) => ({ ...s, color: r.role.color }))).join("rect")
+    // Each bar is filled with a hard-stop gradient: full color for playoff seasons, dimmed for the rest
+    const spansOf = new Map(rows.filter((r) => r.type === "player").map((r) => [r.player.id, barSpans(r.player).map((s, i) => ({
+      ...s, id: `bar-${r.player.id}-${i}`, color: r.role.color, runs: playoffRuns(s, r.player.playoffSeasons),
+    }))]));
+    svg.append("defs").selectAll("linearGradient").data([...spansOf.values()].flat()).join("linearGradient")
+      .attr("id", (s) => s.id).attr("gradientUnits", "userSpaceOnUse").attr("x1", 0).attr("x2", width)
+      .selectAll("stop").data((s) => s.runs.flatMap((run) => [run.from, run.to].map((t) => ({ ...run, t, color: s.color }))))
+      .join("stop")
+      .attr("offset", (d) => x(d.t) / width)
+      .style("stop-color", (d) => d.color).style("stop-opacity", (d) => d.played ? 1 : DIM_OPACITY);
+    row.selectAll(".bar").data((r) => spansOf.get(r.player.id)).join("rect")
       .attr("class", "bar")
       .attr("x", (s) => x(barStart(s)) + 1).attr("width", (s) => Math.max(x(barEnd(s)) - x(barStart(s)) - 2, 2))
       .attr("y", (ROW_H - BAR_H) / 2).attr("height", BAR_H).attr("rx", 3)
-      .attr("fill", (s) => s.color);
+      .attr("fill", (s) => `url(#${s.id})`);
     // Full-row hit target
     row.append("rect").attr("x", 0).attr("width", width).attr("height", ROW_H)
       .attr("fill", "transparent")
@@ -189,7 +237,9 @@
     const payrollBySeason = new Map(data.payroll.map((e) => [e.season, e]));
     axisSvg.on("mousemove.payroll", (event) => {
       const s = seasonAt(event, axisSvg);
-      if (s === null) hideTooltip(); else showSeasonTooltip(event, s, payrollBySeason.get(s), cupSeasons.includes(s));
+      if (s === null) { hideTooltip(); return; }
+      const tag = cupSeasons.includes(s) ? "Stanley Cup" : missedPlayoffs.includes(s) ? "Missed playoffs" : null;
+      showSeasonTooltip(event, s, payrollBySeason.get(s), tag);
     }).on("mouseleave.payroll", hideTooltip);
 
     function highlightSeason(s) {
@@ -212,6 +262,9 @@
       target.append("g").selectAll("rect").data(cupSeasons).join("rect")
         .attr("x", (s) => x(s)).attr("width", pxPerSeason).attr("y", 0).attr("height", h)
         .attr("fill", "var(--cup-fill)");
+      target.append("g").selectAll("rect").data(missedPlayoffs).join("rect")
+        .attr("x", (s) => x(s)).attr("width", pxPerSeason).attr("y", 0).attr("height", h)
+        .attr("fill", "var(--no-playoffs-fill)");
       if (LOCKOUT_SEASON >= minYear && LOCKOUT_SEASON < maxYear) {
         target.append("rect")
           .attr("x", x(LOCKOUT_SEASON)).attr("width", pxPerSeason).attr("y", 0).attr("height", h)
@@ -243,9 +296,10 @@
     const stints = p.stints.map((s) =>
       s.start === s.end ? seasonLabel(s.start) : `${seasonLabel(s.start)} to ${seasonLabel(s.end)}`
     ).join("<br>");
-    const inactive = (p.inactive || []).map((g) =>
-      g.start === g.end ? seasonLabel(g.start) : `${seasonLabel(g.start)} to ${seasonLabel(g.end)}`
-    ).join("<br>");
+    const rangeText = (g) => g.start === g.end ? seasonLabel(g.start) : `${seasonLabel(g.start)} to ${seasonLabel(g.end)}`;
+    const inactive = (p.inactive || []).map(rangeText).join("<br>");
+    const noPlayoffs = seasonRanges(barSpans(p).flatMap((s) => d3.range(s.start, s.end + 1))
+      .filter((y) => y !== LOCKOUT_SEASON && !p.playoffSeasons.includes(y))).map(rangeText).join("<br>");
     const seasonCount = d3.sum(p.stints, (s) => s.end - s.start + 1 - (s.start < LOCKOUT_SEASON && s.end > LOCKOUT_SEASON ? 1 : 0));
     const cupWins = cupSeasons.filter((s) => p.playoffSeasonsInWindow.includes(s));
     // Prefix each acquisition with its stint's first season only when there is more than one
@@ -257,6 +311,7 @@
       <div class="tt-row">${POSITION_NAMES[p.position]} · ${p.role}</div>
       <div class="tt-row"><span class="tt-key">Red Wings:</span><br>${stints}</div>
       <div class="tt-row"><span class="tt-key">Acquired:</span><br>${acquired}</div>
+      ${noPlayoffs ? `<div class="tt-row"><span class="tt-key">Did not play in playoffs:</span><br>${noPlayoffs}</div>` : ""}
       ${inactive ? `<div class="tt-row"><span class="tt-key">No games played:</span><br>${inactive}</div>` : ""}
       <div class="tt-row"><span class="tt-key">Seasons with Detroit:</span> ${seasonCount}</div>
       <div class="tt-row"><span class="tt-key">Cup wins:</span> ${cupWins.length ? cupWins.map(shortSeason).join(", ") : "None"}</div>`;
@@ -266,7 +321,7 @@
   const money = (v) => v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : `$${Math.round(v / 1e3)}K`;
   const percent = (v, of) => `${Math.round(v / of * 100)}%`;
 
-  function showSeasonTooltip(event, s, e, isCup) {
+  function showSeasonTooltip(event, s, e, tag) {
     let body;
     if (s === LOCKOUT_SEASON) {
       body = `<div class="tt-row">No season (lockout)</div>`;
@@ -289,7 +344,7 @@
         ${e.note ? `<div class="tt-note">${e.note}</div>` : ""}
         <div class="tt-source">${e.measure === "cap" ? "Salary-cap hits" : "Player salaries"} · ${e.source}</div>`;
     }
-    tooltip.innerHTML = `<div class="tt-name">${seasonLabel(s)}${isCup ? " · Stanley Cup" : ""}</div>${body}`;
+    tooltip.innerHTML = `<div class="tt-name">${seasonLabel(s)}${tag ? ` · ${tag}` : ""}</div>${body}`;
     placeTooltip(event);
   }
 

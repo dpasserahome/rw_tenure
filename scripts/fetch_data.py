@@ -20,6 +20,7 @@ OUT_PATH = os.path.join(ROOT, "data", "players.json")
 CORE_START, CORE_END = 1996, 2007  # season start years, inclusive
 CUP_SEASONS = [1996, 1997, 2001, 2007]
 LOCKOUT_SEASONS = {2004}  # no games played; not a tenure gap
+MISSED_PLAYOFFS = [1985, 1989, 2016, 2017, 2018, 2019, 2020]  # Detroit missed the playoffs; checked against the data in main()
 # Work stoppages; non-NHL signings during them were loans, not moves away from Detroit
 LOCKOUTS = [(datetime.date(2004, 9, 16), datetime.date(2005, 7, 22)),
             (datetime.date(2012, 9, 16), datetime.date(2013, 1, 12))]
@@ -80,6 +81,13 @@ def detroit_seasons(landing):
                 and s.get("gamesPlayed", 0) >= 1):
             seasons.add(int(str(s["season"])[:4]))
     return sorted(seasons)
+
+
+def detroit_playoff_seasons(landing):
+    """Season start years with >=1 NHL playoff game for Detroit."""
+    return sorted({int(str(s["season"])[:4]) for s in landing.get("seasonTotals", [])
+                   if s.get("leagueAbbrev") == "NHL" and s.get("gameTypeId") == 3
+                   and s.get("teamName", {}).get("default") == TEAM_NAME and s.get("gamesPlayed", 0) >= 1})
 
 
 def seasons_played_anywhere(landing):
@@ -305,6 +313,7 @@ def main():
             "stints": stints,
             "inactive": inactive,
             "playoffSeasonsInWindow": sorted(seasons_in_window),
+            "playoffSeasons": detroit_playoff_seasons(landing),
             "acquisitions": acquired,
         })
 
@@ -315,10 +324,18 @@ def main():
         p["lastName"],
     ))
 
+    # Every season in the extent with no Detroit playoff game among the included players should be a known miss
+    extent = range(min(p["stints"][0]["start"] for p in players), max(p["stints"][-1]["end"] for p in players) + 1)
+    with_playoffs = {y for p in players for y in p["playoffSeasons"]}
+    no_playoffs = [y for y in extent if y not in with_playoffs and y not in LOCKOUT_SEASONS]
+    if no_playoffs != MISSED_PLAYOFFS:
+        raise SystemExit(f"Seasons without Detroit playoff games {no_playoffs} don't match MISSED_PLAYOFFS {MISSED_PLAYOFFS}")
+
     out = {
         "generated": datetime.date.today().isoformat(),
         "coreWindow": {"start": CORE_START, "end": CORE_END},
         "cupSeasons": CUP_SEASONS,
+        "missedPlayoffs": MISSED_PLAYOFFS,
         "payroll": payroll_seasons(min(p["stints"][0]["start"] for p in players),
                                    max(p["stints"][-1]["end"] for p in players)),
         "players": players,
